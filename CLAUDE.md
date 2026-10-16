@@ -1,0 +1,68 @@
+# Job search — how Claude works in this repo
+
+Ahmed is applying for AI engineer roles. His CV name is **Ahmed Dorra**; his GitHub, LinkedIn URL and portfolio still say Ahmed Mostafa. He sends job postings (pasted text, a link, or a company website), often from his phone during commutes. For each one, run the routine below with as little back-and-forth as possible, and keep replies short: he reads them on a phone.
+
+## Tracker
+
+- Dashboard: https://claude.ai/artifact/3U2A9XwLESewJ8e7Wt9Vus (private artifact "AI Engineer Applications").
+- Data lives in the artifact's database (`ArtifactData` tool). Collection `applications`; document id `YYYY-MM-DD-<company-slug>`.
+- Fields: `company, role, location, source, postingUrl, contact, status, postedOn, appliedOn, followUpOn, cvAsset, cvName, packAsset, packName, notes, createdAt, updatedAt`. Dates are `YYYY-MM-DD`; unknown values are `null`.
+- `status` is one of: `Ready to send`, `Applied`, `Screening`, `Interview`, `Offer`, `Rejected`, `No response`, `Withdrawn`.
+- Files: upload the tailored CV PDF and the application `.md` to the artifact's asset store (`Artifact` publish with the tracker `url` and `asset: true`; a `.md` file goes in a call of its own) and store the returned ids in `cvAsset` / `packAsset`.
+- Before adding a row, `list` the collection: recruiters repost the same job, and a duplicate should be pointed out, not re-applied.
+- **"done"** from Ahmed means he sent the latest `Ready to send` application: update that row to `status: Applied`, `appliedOn: today`, `followUpOn: today + 7` (pin the write with `if_version`).
+- Status updates he reports ("Raya replied", "rejected by X") go to the matching row the same way.
+
+## Routine for each posting
+
+1. **Read it fully.** For a link, fetch the page. For a company website, find its careers portal: Recruitee (`<company>.recruitee.com/api/offers/`), Workable, Greenhouse or Lever all publish open jobs in machine-readable form. LinkedIn and Wuzzuf block automated reads, so ask him to paste the text.
+2. **Check the company.** Look at its website, the domain's age (`https://rdap.org/domain/<domain>`), the UK company register for UK firms, and any news. Red flags: any fee, ID documents before an offer, no footprint plus a brand-new domain, US-only work authorisation, nationals-only roles.
+3. **Give a verdict:** apply, apply as a backup, or skip, with the reason in two or three lines. Skip without tailoring when he isn't legally eligible to work there, when the core requirements are outside his field, or when it's a 3+ year senior role. When a post has no details at all, use the base CV and an email that asks for the details.
+4. **Tailor the CV.** Add `cv/variants/<slug>.py`: import from `cv_content` (or from another variant whose requirements match), override `TITLE`, `SUMMARY`, `SKILLS` and project bullets or order, and set `FILE_STEM = "Ahmed_Dorra_CV_<Company>"`. Build it with `cd cv && CV_MODULE=variants.<slug> python3 build_cv.py ../out`. It must stay at 2 pages: check with `pdfinfo`, render page 1 with `pdftoppm -r 70 -png -f 1 -l 1`, and look at the image.
+5. **Write `applications/<doc-id>.md`.** Include: the posting, how to apply (address, the exact subject line they ask for, the attachment), the verdict and the company check; the email, ready to paste; likely questions or interview prep; and the original post, quoted.
+6. **Deliver.** Upload both files to the tracker, add the row as `Ready to send`, send him the PDF and the `.md` with `SendUserFile`, then commit and push to this repo.
+7. **Reply in a few lines:** the verdict, what was tailored, exactly how to send it, and the tracker status.
+
+## Truthfulness rules (non-negotiable)
+
+Only use claims verified against his repositories or confirmed by him.
+
+- **Never claim:**
+  - YOLO / object detection
+  - n8n
+  - TypeScript / JavaScript
+  - TensorFlow (he's stronger in PyTorch and Hugging Face)
+  - Azure / Copilot Studio
+  - speech (STT / TTS)
+  - OCR
+  - vector-based memory: the Shopping Assistant's long-term memory is typed facts in PostgreSQL, plus a LangGraph Postgres checkpointer for conversation state
+- **Not his work, so keep them off the CV until he rebuilds them:** Dialogue Summarization (QLoRA) and the Banking Intent Classifier.
+- **Research Assistant:** he designed the agent, and Claude built most of the rest. Describe the design; don't overstate the implementation.
+- **VISIONEER (2024):** he and a colleague did the LoRA fine-tuning; the teammate trained the schematic model.
+- **Shopping Assistant numbers**, verified in that repo's `README.md`, `docs/evaluation.md` and `eval/IMPROVEMENT_LOG.md`:
+  - 12,730 products.
+  - Retrieval was measured on 127 labelled queries with 95% confidence intervals. Top-10 recall: 72% hybrid vs 56% keyword vs 41% vector.
+  - Reranking moved the right product to first place from 23% to 43% (40-query subset).
+  - The HNSW index cut median vector-search latency from 35 ms to 3.1 ms.
+  - The agent evaluation used 12 tasks × 3 runs:
+    - Prompt v2 passed 12 of 12 tasks vs 7, with 29% fewer paid rerank calls.
+    - v3 moved price and rating limits inside search: matching results 70% to 100% (57/81 → 48/48), with 15% fewer paid searches.
+  - Guardrails refused 0 of 21 legitimate facts. The `prices_grounded` check passed in 25 of 25 applicable runs.
+  - 104 tests. `MAX_FACTS_PER_USER = 50`.
+  - Ingestion uses pandas loaders for 5 file formats plus row-level Pydantic validation.
+- **Still to confirm with him:**
+  - military service dates (the CV assumes 01/2025 – 01/2026);
+  - the internship partners' exact names (IBM and an Abu Dhabi entity);
+  - whether VISIONEER was his graduation project.
+
+## Profile facts
+
+- Giza, Egypt · +20 100 614 8440 · newahmed1672022@gmail.com · linkedin.com/in/ahmed-mostafa-dorra · github.com/AhmedMostafa167 · ahmedmostafa167.github.io
+- Egyptian; open to relocation and remote work. He has no US work authorisation.
+- BSc Computer Science (06/2024). Teaching Assistant 10/2024 – 12/2024 and since 02/2026. Military service in between.
+- Native Arabic speaker: mention it for Arabic, MENA or GCC-facing companies.
+- Notice period, expected salary and years of experience haven't been given yet, so leave `[FILL IN]` placeholders.
+
+## Setup
+
+`.claude/settings.json` installs `cv/requirements.txt` when a session starts. The cloud image already has Chromium at `/opt/pw-browsers/chromium` and poppler (`pdfinfo`, `pdftotext`, `pdftoppm`). Build outputs go to `out/`, which is git-ignored, and the tracker keeps every PDF that was sent.
