@@ -5,6 +5,7 @@ Ahmed is applying for AI engineer roles. His CV name is **Ahmed Dorra**; his Git
 ## Tracker
 
 - Dashboard: https://claude.ai/artifact/3U2A9XwLESewJ8e7Wt9Vus (private artifact "AI Engineer Applications").
+- Page source: `tracker/applications.html`. To change the page, edit it and publish with the Artifact tool using the tracker `url` (it was published from another session, so read it first). The capabilities it declares are kept on redeploy when `capabilities` is omitted.
 - Data lives in the artifact's database (`ArtifactData` tool). Collection `applications`; document id `YYYY-MM-DD-<company-slug>`.
 - Fields: `company, role, location, source, postingUrl, contact, status, postedOn, appliedOn, followUpOn, cvAsset, cvName, packAsset, packName, notes, createdAt, updatedAt`. Dates are `YYYY-MM-DD`; unknown values are `null`.
 - `status` is one of: `Ready to send`, `Applied`, `Screening`, `Interview`, `Offer`, `Rejected`, `No response`, `Withdrawn`.

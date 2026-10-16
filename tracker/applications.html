@@ -1,0 +1,473 @@
+<title>AI Engineer Applications</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one-column ledger. Pipeline counts on top, one row per application, add form last. */
+  :root {
+    --bg: #f4f6f9; --surface: #ffffff; --fg: #141a26; --muted: #5a6476; --line: #dce2ea;
+    --accent: #1f3a68; --accent-soft: #e5ebf5; --accent-fg: #ffffff;
+    --ok: #17683f; --ok-soft: #e0f1e7; --warn: #8a5200; --warn-soft: #fbeed6;
+    --bad: #9b3030; --bad-soft: #f7e3e3; --idle: #5a6476; --idle-soft: #eceff3;
+    --font-ui: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1219; --surface: #151b25; --fg: #e6eaf1; --muted: #98a3b6; --line: #283140;
+      --accent: #8db0ea; --accent-soft: #1b2940; --accent-fg: #0e1219;
+      --ok: #72cf9d; --ok-soft: #14301f; --warn: #e8b65f; --warn-soft: #352812;
+      --bad: #ef9090; --bad-soft: #3a1b1b; --idle: #98a3b6; --idle-soft: #212936;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1219; --surface: #151b25; --fg: #e6eaf1; --muted: #98a3b6; --line: #283140;
+    --accent: #8db0ea; --accent-soft: #1b2940; --accent-fg: #0e1219;
+    --ok: #72cf9d; --ok-soft: #14301f; --warn: #e8b65f; --warn-soft: #352812;
+    --bad: #ef9090; --bad-soft: #3a1b1b; --idle: #98a3b6; --idle-soft: #212936;
+    color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 15px; line-height: 1.5; }
+  .wrap {
+    max-width: 980px; margin: 0 auto; display: grid; gap: 20px;
+    padding-block: 28px 56px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  a { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  header { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: end; justify-content: space-between; }
+  header > div { min-width: 0; }
+  h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+  .sub { color: var(--muted); margin: 2px 0 0; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .btn {
+    font: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+    padding: 7px 14px; border-radius: 8px; border: 1px solid var(--accent);
+    background: var(--accent); color: var(--accent-fg);
+  }
+  .btn.ghost { background: transparent; color: var(--accent); }
+  .btn.small { padding: 3px 10px; font-size: 0.8rem; }
+  .btn.danger { border-color: var(--bad); background: var(--bad); color: var(--surface); }
+  .btn:disabled { opacity: 0.55; cursor: progress; }
+
+  .pipeline {
+    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+  }
+  .stage { padding: 10px 14px; display: grid; gap: 1px; border-right: 1px solid var(--line); }
+  .stage:last-child { border-right: 0; }
+  .stage .n { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--muted); }
+  .stage.has .n { color: var(--fg); }
+  .stage.has[data-tone="warn"] .n { color: var(--warn); }
+  .stage.has[data-tone="ok"] .n { color: var(--ok); }
+  .stage .l { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+  .banner { background: var(--warn-soft); color: var(--warn); border-radius: 8px; padding: 10px 14px; font-weight: 500; }
+
+  .list { display: grid; gap: 12px; }
+  .empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 10px; padding: 28px 20px; color: var(--muted); text-align: center; }
+  .empty strong { color: var(--fg); display: block; margin-bottom: 4px; }
+
+  .app {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+    display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, auto); gap: 8px 22px; align-items: start;
+  }
+  .app[data-tone="warn"] { border-left: 3px solid var(--warn); }
+  .who { display: grid; gap: 2px; min-width: 0; }
+  .who h2 { font-size: 1.05rem; font-weight: 600; margin: 0; text-wrap: balance; }
+  .role { margin: 0; color: var(--muted); font-size: 0.92rem; }
+  .contact { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: var(--font-mono); font-size: 0.82rem; margin-top: 2px; }
+  .contact span { user-select: all; overflow-wrap: anywhere; }
+
+  .dates { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 12px; margin: 0; font-size: 0.85rem; }
+  .dates dt { color: var(--muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; align-self: center; }
+  .dates dd { margin: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+  .dates input[type="date"] { font: inherit; font-size: 0.82rem; padding: 1px 4px; border: 1px solid var(--line); border-radius: 5px; background: var(--bg); color: var(--fg); }
+  .ago { color: var(--muted); }
+  .due { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; color: var(--warn); background: var(--warn-soft); padding: 1px 8px; border-radius: 999px; }
+
+  .side { display: grid; gap: 8px; justify-items: end; min-width: 0; }
+  .status {
+    font: inherit; font-size: 0.82rem; font-weight: 600; padding: 4px 8px; border-radius: 6px;
+    border: 1px solid var(--tone-fg); background: var(--tone-bg); color: var(--tone-fg);
+  }
+  .chip { font-size: 0.82rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--tone-bg); color: var(--tone-fg); }
+  [data-tone="accent"] { --tone-bg: var(--accent-soft); --tone-fg: var(--accent); }
+  [data-tone="ok"] { --tone-bg: var(--ok-soft); --tone-fg: var(--ok); }
+  [data-tone="warn"] { --tone-bg: var(--warn-soft); --tone-fg: var(--warn); }
+  [data-tone="bad"] { --tone-bg: var(--bad-soft); --tone-fg: var(--bad); }
+  [data-tone="idle"] { --tone-bg: var(--idle-soft); --tone-fg: var(--idle); }
+
+  .files { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+  .file {
+    font-size: 0.82rem; padding: 4px 10px; border-radius: 6px; text-decoration: none;
+    border: 1px solid var(--line); background: var(--bg); color: var(--fg); white-space: nowrap;
+  }
+  .file:hover { border-color: var(--accent); color: var(--accent); }
+
+  .notes { grid-column: 1 / -1; border-top: 1px dashed var(--line); padding-top: 8px; display: grid; gap: 6px; }
+  .notes p { margin: 0; color: var(--muted); font-size: 0.9rem; white-space: pre-wrap; }
+  .notes textarea {
+    width: 100%; box-sizing: border-box; font: inherit; font-size: 0.9rem; color: var(--fg);
+    background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 4px 6px; resize: vertical; min-height: 2.4em;
+  }
+  .notes textarea:hover, .notes textarea:focus { border-color: var(--line); background: var(--bg); }
+  .row-tools { display: flex; gap: 8px; justify-content: flex-end; align-items: center; flex-wrap: wrap; font-size: 0.85rem; }
+  .link-btn { font: inherit; font-size: 0.8rem; background: none; border: 0; padding: 2px 4px; color: var(--muted); cursor: pointer; text-decoration: underline; }
+  .link-btn:hover { color: var(--bad); }
+
+  details.add { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  details.add > summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--accent); list-style: none; }
+  details.add > summary::-webkit-details-marker { display: none; }
+  details.add > summary::before { content: "+ "; }
+  details.add[open] > summary::before { content: "− "; }
+  form.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; padding: 0 16px 16px; }
+  .field { display: grid; gap: 4px; min-width: 0; }
+  .field.wide { grid-column: 1 / -1; }
+  .field label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .field input, .field select, .field textarea {
+    font: inherit; font-size: 0.92rem; padding: 7px 9px; border-radius: 7px; min-width: 0;
+    border: 1px solid var(--line); background: var(--bg); color: var(--fg);
+  }
+  .form-foot { grid-column: 1 / -1; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .hint { color: var(--muted); font-size: 0.82rem; }
+
+  .toast {
+    position: fixed; left: 50%; transform: translateX(-50%);
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    background: var(--fg); color: var(--bg); padding: 8px 14px; border-radius: 8px; font-size: 0.88rem; font-weight: 500;
+    max-width: calc(100vw - 32px);
+  }
+
+  @media (max-width: 760px) {
+    .app { grid-template-columns: minmax(0, 1fr); }
+    .side { justify-items: start; }
+    .files, .row-tools { justify-content: flex-start; }
+  }
+  @media (max-width: 560px) {
+    .pipeline { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .stage:nth-child(3) { border-right: 0; }
+    .stage:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+    form.grid { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>AI Engineer Applications</h1>
+      <p class="sub" id="summary">Loading your applications…</p>
+    </div>
+    <div class="actions">
+      <button class="btn ghost" id="export-csv" type="button" hidden>Download as spreadsheet (.csv)</button>
+    </div>
+  </header>
+
+  <section class="pipeline" id="pipeline" aria-label="Applications by stage"></section>
+  <div class="banner" id="banner" role="status" hidden></div>
+  <section class="list" id="list" aria-live="polite"></section>
+
+  <details class="add" id="add-panel" hidden>
+    <summary>Add an application</summary>
+    <form class="grid" id="add-form" novalidate>
+      <div class="field"><label for="f-company">Company</label><input id="f-company" required placeholder="e.g. Arabic.AI"></div>
+      <div class="field"><label for="f-role">Role</label><input id="f-role" required placeholder="e.g. AI Engineer"></div>
+      <div class="field"><label for="f-location">Location</label><input id="f-location" placeholder="e.g. Remote · Egypt"></div>
+      <div class="field"><label for="f-source">Applied through</label><input id="f-source" placeholder="e.g. LinkedIn, Workable, email"></div>
+      <div class="field wide"><label for="f-url">Posting link</label><input id="f-url" type="url" placeholder="https://"></div>
+      <div class="field"><label for="f-contact">Contact email</label><input id="f-contact" placeholder="optional"></div>
+      <div class="field"><label for="f-status">Status</label><select id="f-status"></select></div>
+      <div class="field"><label for="f-posted">Posted on</label><input id="f-posted" type="date"></div>
+      <div class="field"><label for="f-applied">Applied on</label><input id="f-applied" type="date"></div>
+      <div class="field wide" id="cv-field"><label for="f-cv">CV sent (PDF)</label><input id="f-cv" type="file" accept=".pdf,application/pdf"></div>
+      <div class="field wide"><label for="f-notes">Notes</label><textarea id="f-notes" rows="2" placeholder="Fit, gaps, who you spoke to"></textarea></div>
+      <div class="form-foot">
+        <button class="btn" type="submit" id="f-submit">Add application</button>
+        <span class="hint" id="f-hint">A follow-up date is set 7 days after you apply.</span>
+      </div>
+    </form>
+  </details>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function () {
+  const STATUSES = ["Ready to send", "Applied", "Screening", "Interview", "Offer", "Rejected", "No response", "Withdrawn"];
+  const TONE = { "Ready to send": "warn", Applied: "accent", Screening: "accent", Interview: "ok", Offer: "ok", Rejected: "bad", "No response": "idle", Withdrawn: "idle" };
+  const STAGES = [
+    ["Ready to send", ["Ready to send"], "warn"], ["Applied", ["Applied"], "accent"], ["Screening", ["Screening"], "accent"],
+    ["Interview", ["Interview"], "ok"], ["Offer", ["Offer"], "ok"], ["Closed", ["Rejected", "No response", "Withdrawn"], "idle"],
+  ];
+  const WAITING = new Set(["Applied", "Screening"]);
+  const FOLLOW_UP_DAYS = 7;
+
+  const state = { rows: [], loaded: false, db: null, assets: null, downloads: null, canWrite: null, error: "", pendingRender: false };
+  const $ = (id) => document.getElementById(id);
+
+  function h(tag, props, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(props || {})) {
+      if (v == null || v === false) continue;
+      if (k === "class") n.className = v;
+      else if (k === "text") n.textContent = v;
+      else if (k === "value") n.value = v;
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v === true ? "" : v);
+    }
+    for (const kid of kids.flat()) if (kid != null && kid !== false) n.append(kid);
+    return n;
+  }
+
+  function today() {
+    const d = new Date();
+    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  }
+  function parse(iso) { const [y, m, d] = iso.split("-").map(Number); return new Date(y, m - 1, d); }
+  function addDays(iso, n) { const d = parse(iso); d.setDate(d.getDate() + n); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); }
+  function fmt(iso) { return iso ? parse(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "—"; }
+  function daysSince(iso) { return Math.round((parse(today()) - parse(iso)) / 86400000); }
+  function ago(iso) { const n = daysSince(iso); return n <= 0 ? "today" : n === 1 ? "1 day ago" : n + " days ago"; }
+  function isDue(r) { return WAITING.has(r.status) && r.followUpOn && r.followUpOn <= today(); }
+  function slug(s) { return s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 48) || "job"; }
+
+  function sorted() {
+    return [...state.rows].sort((a, b) => {
+      const ra = a.status === "Ready to send" ? 0 : 1, rb = b.status === "Ready to send" ? 0 : 1;
+      if (ra !== rb) return ra - rb;
+      return (b.appliedOn || "").localeCompare(a.appliedOn || "") || (a.company || "").localeCompare(b.company || "");
+    });
+  }
+
+  let toastTimer = 0;
+  function toast(msg) {
+    const t = $("toast");
+    t.textContent = msg; t.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 2600);
+  }
+  function writeFailed(e) {
+    if (e && e.code === "invalid_argument") { state.canWrite = false; render(); toast("You can view this tracker but not change it."); }
+    else if (e && e.code === "quota_exceeded") toast("The tracker is full. Remove old applications to add new ones.");
+    else toast("That change didn't save. Check your connection and try again.");
+  }
+
+  async function save(id, patch) {
+    try {
+      await state.db.doc("applications/" + id).update(Object.assign({}, patch, { updatedAt: new Date().toISOString() }));
+      toast("Saved");
+    } catch (e) { writeFailed(e); }
+  }
+
+  function summaryText() {
+    if (state.error) return "";
+    if (!state.loaded) return "Loading your applications…";
+    const n = state.rows.length;
+    if (!n) return "Nothing tracked yet.";
+    const ready = state.rows.filter((r) => r.status === "Ready to send").length;
+    const due = state.rows.filter(isDue).length;
+    const next = state.rows.filter((r) => WAITING.has(r.status) && r.followUpOn && r.followUpOn > today())
+      .sort((a, b) => a.followUpOn.localeCompare(b.followUpOn))[0];
+    const parts = [n === 1 ? "1 application" : n + " applications"];
+    if (ready) parts.push(ready + " ready to send");
+    if (due) parts.push(due === 1 ? "1 follow-up due" : due + " follow-ups due");
+    else if (next) parts.push("next follow-up: " + next.company + " on " + fmt(next.followUpOn));
+    return parts.join(" · ");
+  }
+
+  function renderPipeline() {
+    const p = $("pipeline");
+    p.replaceChildren(...STAGES.map(([label, statuses, tone]) => {
+      const n = state.rows.filter((r) => statuses.includes(r.status)).length;
+      return h("div", { class: "stage" + (n ? " has" : ""), "data-tone": tone },
+        h("span", { class: "n", text: String(n) }), h("span", { class: "l", text: label }));
+    }));
+  }
+
+  function fileLink(assetId, label) {
+    return assetId ? h("a", { class: "file", href: "/_blob/" + assetId, target: "_blank", rel: "noopener", text: label }) : null;
+  }
+
+  function copyButton(text) {
+    return h("button", {
+      class: "btn ghost small", type: "button", text: "Copy",
+      onclick: async (ev) => {
+        try { await navigator.clipboard.writeText(text); toast("Copied " + text); }
+        catch (_) {
+          const span = ev.currentTarget.previousSibling;
+          const range = document.createRange(); range.selectNodeContents(span);
+          const sel = getSelection(); sel.removeAllRanges(); sel.addRange(range);
+          toast("Press Ctrl+C to copy");
+        }
+      },
+    });
+  }
+
+  function renderRow(r) {
+    const editable = state.canWrite !== false;
+    const tone = TONE[r.status] || "idle";
+
+    const who = h("div", { class: "who" },
+      h("h2", { text: r.company || "Untitled" }),
+      h("p", { class: "role", text: [r.role, r.location].filter(Boolean).join(" · ") }),
+      r.source ? h("p", { class: "role", text: (r.status === "Ready to send" ? "Apply by " : "Applied through ") + r.source }) : null,
+      r.contact ? h("div", { class: "contact" }, h("span", { text: r.contact }), copyButton(r.contact)) : null);
+
+    const followDd = h("dd", {});
+    if (editable && WAITING.has(r.status)) {
+      followDd.append(h("input", {
+        type: "date", id: "follow-" + r.id, value: r.followUpOn || "", "aria-label": "Follow-up date for " + r.company,
+        onchange: (ev) => save(r.id, { followUpOn: ev.target.value || null }),
+      }));
+    } else followDd.append(fmt(WAITING.has(r.status) ? r.followUpOn : null));
+    if (isDue(r)) followDd.append(h("span", { class: "due", text: "Follow up now" }));
+
+    const dates = h("dl", { class: "dates" },
+      h("dt", { text: "Posted" }), h("dd", { text: fmt(r.postedOn) }),
+      h("dt", { text: "Applied" }), h("dd", {}, fmt(r.appliedOn), r.appliedOn ? h("span", { class: "ago", text: ago(r.appliedOn) }) : null),
+      h("dt", { text: "Follow up" }), followDd);
+
+    const statusEl = editable
+      ? h("select", {
+          class: "status", id: "status-" + r.id, "data-tone": tone, "aria-label": "Status for " + r.company,
+          onchange: (ev) => {
+            const status = ev.target.value, patch = { status };
+            if (status === "Applied" && !r.appliedOn) patch.appliedOn = today();
+            if (WAITING.has(status) && !r.followUpOn) patch.followUpOn = addDays(patch.appliedOn || r.appliedOn || today(), FOLLOW_UP_DAYS);
+            save(r.id, patch);
+          },
+        }, STATUSES.map((s) => h("option", { value: s, text: s, selected: s === r.status })))
+      : h("span", { class: "chip", "data-tone": tone, text: r.status || "—" });
+
+    const files = h("div", { class: "files" },
+      r.postingUrl ? h("a", { class: "file", href: r.postingUrl, target: "_blank", rel: "noopener", text: "Posting ↗" }) : null,
+      fileLink(r.cvAsset, r.status === "Ready to send" ? "CV to send (PDF)" : "CV sent (PDF)"),
+      fileLink(r.packAsset, "Cover letter & answers"));
+
+    const side = h("div", { class: "side" }, statusEl, files);
+
+    const notes = h("div", { class: "notes" });
+    if (editable) {
+      notes.append(h("textarea", {
+        id: "notes-" + r.id, rows: "2", value: r.notes || "", placeholder: "Add notes", "aria-label": "Notes for " + r.company,
+        onblur: (ev) => { if ((ev.target.value || "") !== (r.notes || "")) save(r.id, { notes: ev.target.value }); },
+      }));
+      const tools = h("div", { class: "row-tools" });
+      const ask = () => tools.replaceChildren(
+        h("span", { text: "Remove " + r.company + " from the tracker?" }),
+        h("button", { class: "btn danger small", type: "button", text: "Remove", onclick: async (ev) => {
+          ev.currentTarget.disabled = true;
+          try { await state.db.doc("applications/" + r.id).delete(); toast("Removed " + r.company); }
+          catch (e) { writeFailed(e); reset(); }
+        } }),
+        h("button", { class: "btn ghost small", type: "button", text: "Keep", onclick: () => reset() }));
+      const reset = () => tools.replaceChildren(h("button", { class: "link-btn", type: "button", text: "Remove", onclick: ask }));
+      reset();
+      notes.append(tools);
+    } else if (r.notes) notes.append(h("p", { text: r.notes }));
+
+    return h("article", { class: "app", "data-tone": r.status === "Ready to send" ? "warn" : null }, who, dates, side, notes);
+  }
+
+  function render() {
+    const list = $("list");
+    const active = document.activeElement;
+    if (active && list.contains(active) && active.matches("textarea, input")) { state.pendingRender = true; return; }
+    state.pendingRender = false;
+
+    $("summary").textContent = summaryText();
+    $("banner").hidden = !state.error;
+    $("banner").textContent = state.error;
+    renderPipeline();
+    $("export-csv").hidden = !(state.downloads && state.rows.length);
+    $("add-panel").hidden = !(state.db && state.canWrite !== false && !state.error);
+    $("cv-field").hidden = !state.assets;
+
+    if (state.error) { list.replaceChildren(); return; }
+    if (!state.loaded) {
+      list.replaceChildren(h("div", { class: "empty" }, h("strong", { text: "Loading applications" }), "Each job you apply to appears here with its posting, dates, status and the CV you sent."));
+      return;
+    }
+    if (!state.rows.length) {
+      list.replaceChildren(h("div", { class: "empty" }, h("strong", { text: "No applications yet" }),
+        "Send Claude a job posting and it will add the row with the tailored CV, or add one yourself with the form below."));
+      return;
+    }
+    list.replaceChildren(...sorted().map(renderRow));
+  }
+
+  document.addEventListener("focusout", () => setTimeout(() => { if (state.pendingRender) render(); }, 0));
+
+  function csv() {
+    const cols = [["company", "Company"], ["role", "Role"], ["location", "Location"], ["source", "Applied through"], ["status", "Status"],
+      ["postedOn", "Posted on"], ["appliedOn", "Applied on"], ["followUpOn", "Follow up"], ["postingUrl", "Posting"],
+      ["contact", "Contact"], ["cvName", "CV sent"], ["notes", "Notes"]];
+    const esc = (v) => { v = v == null ? "" : String(v); return /[",\r\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+    return "﻿" + [cols.map((c) => c[1]).join(","), ...sorted().map((r) => cols.map((c) => esc(r[c[0]])).join(","))].join("\r\n");
+  }
+  $("export-csv").addEventListener("click", async (ev) => {
+    const btn = ev.currentTarget; btn.disabled = true;
+    try { await state.downloads.save({ filename: "job-applications-" + today() + ".csv", data: csv() }); }
+    catch (e) {
+      if (e && e.code === "rate_limited") toast("A download is already waiting for your answer.");
+      else if (e && e.code !== "declined") { toast("Downloads aren't available here."); state.downloads = null; render(); }
+    } finally { btn.disabled = false; }
+  });
+
+  $("f-status").replaceChildren(...STATUSES.map((s) => h("option", { value: s, text: s, selected: s === "Applied" })));
+  $("f-applied").value = today();
+  $("add-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const v = (id) => $(id).value.trim();
+    if (!v("f-company") || !v("f-role")) { toast("Add the company and the role."); ( !v("f-company") ? $("f-company") : $("f-role") ).focus(); return; }
+    const btn = $("f-submit"); btn.disabled = true;
+    try {
+      const status = $("f-status").value;
+      const appliedOn = status === "Ready to send" ? (v("f-applied") || null) : (v("f-applied") || today());
+      const row = {
+        company: v("f-company"), role: v("f-role"), location: v("f-location") || null, source: v("f-source") || null,
+        postingUrl: v("f-url") || null, contact: v("f-contact") || null, status,
+        postedOn: v("f-posted") || null, appliedOn,
+        followUpOn: WAITING.has(status) && appliedOn ? addDays(appliedOn, FOLLOW_UP_DAYS) : null,
+        cvAsset: null, cvName: null, packAsset: null, packName: null, notes: v("f-notes") || "",
+        createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+      };
+      const file = $("f-cv").files && $("f-cv").files[0];
+      if (file && state.assets) {
+        try {
+          const up = await state.assets.upload(file, { type: "application/pdf" });
+          row.cvAsset = up.id; row.cvName = file.name;
+        } catch (e) {
+          toast(e && e.code === "too_large" ? "That PDF is over 20 MB." : e && e.code === "unsupported_type" ? "Attach the CV as a PDF." : "The CV didn't upload. Try again.");
+          return;
+        }
+      }
+      const id = (appliedOn || today()) + "-" + slug(row.company) + "-" + Math.random().toString(36).slice(2, 6);
+      await state.db.collection("applications").doc(id).set(row);
+      $("add-form").reset(); $("f-applied").value = today(); $("f-status").value = "Applied";
+      $("add-panel").open = false;
+      toast("Added " + row.company);
+    } catch (e) { writeFailed(e); }
+    finally { btn.disabled = false; }
+  });
+
+  const use = (name) => (window.claude && window.claude.use ? window.claude.use(name).catch(() => null) : Promise.resolve(null));
+
+  async function init() {
+    render();
+    const [db, user, assets, downloads] = await Promise.all([use("db"), use("user"), use("assets"), use("downloads")]);
+    state.db = db; state.assets = assets; state.downloads = downloads;
+    if (!db) { state.error = "Open this page in claude.ai while signed in to see your applications."; render(); return; }
+    try { state.canWrite = user ? await user.canEdit() : null; } catch (_) { state.canWrite = null; }
+    db.collection("applications").onSnapshot(
+      (snap) => { state.rows = snap.docs.map((d) => Object.assign({ id: d.id }, d.data())); state.loaded = true; state.error = ""; render(); },
+      (e) => { if (e && e.code !== "revoked") state.error = "Your applications couldn't load. Reload the page to try again."; render(); });
+    render();
+  }
+  init();
+})();
+</script>
