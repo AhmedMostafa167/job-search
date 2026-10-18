@@ -48,3 +48,33 @@ _shop["bullets"] = [
     "Prometheus/Grafana; 104 pytest tests and GitHub Actions CI; reranking lifted right-product-first from 23% to 43%.",
 ]
 PROJECTS = [_shop, _research, _visioneer]
+
+COVER_LETTER = {
+    "date": "18 October 2026",
+    "to": ["Hiring Team, Unifonic", "Tech Internship Program, Cairo 2026 (AI/ML track)"],
+    "greeting": "Dear Unifonic Hiring Team,",
+    "paragraphs": [
+        "I'm applying for the Tech Internship Program in Cairo, on the AI/ML track. Agentic Studio, with goal-driven "
+        "agents that handle customer conversations across WhatsApp, SMS and voice for enterprises in Arabic-speaking "
+        "markets, is the kind of system I've spent the past year learning to build, and I'd like to learn to build it "
+        "at real scale alongside your engineers.",
+        "My most recent project, a Shopping Assistant, is a customer-facing conversational agent. Built with LangGraph "
+        "and served through a FastAPI API on PostgreSQL, it holds multi-turn conversations over a 12,730-product "
+        "catalogue, searches it with hybrid retrieval and reranking, and remembers each customer's lasting "
+        "preferences across conversations while leaving one-off requests out. On a labelled test set, reranking "
+        "raised the right product to first place from 23% to 43% of the time.",
+        "What I care about most is knowing whether an agent actually works. I built a code-graded evaluation of 12 "
+        "tasks, each run 3 times: my first prompt passed 7 of them, and the revised version passed all 12 with 29% "
+        "fewer paid searches. I added guardrails that I tested with hostile inputs, a check that every price in a "
+        "reply comes from real search results (it passed in all 25 applicable runs), Langfuse tracing with customer "
+        "feedback scored on each conversation, and 104 automated tests in CI.",
+        "I graduated in Computer Science in June 2024, completed my military service from January 2025 to January "
+        "2026, and since February 2026 I've been back as a Computer Science teaching assistant, a role in which I "
+        "designed and led 50 lab sessions for more than 600 students in 2024. I also fine-tuned Stable Diffusion with "
+        "LoRA in a project published in 2025. I'm a native Arabic speaker with professional English, which matters "
+        "for conversational AI across MENA and the GCC.",
+        "I'm based in Giza and available full-time. I'd welcome the chance to talk about how I could contribute to "
+        "Agentic Studio. Thank you for your time and consideration.",
+    ],
+    "closing": "Sincerely,",
+}
