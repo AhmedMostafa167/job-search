@@ -110,6 +110,15 @@
     border: 1px solid var(--line); background: var(--bg); color: var(--fg); white-space: nowrap;
   }
   .file:hover { border-color: var(--accent); color: var(--accent); }
+  button.file { font: inherit; font-size: 0.82rem; line-height: inherit; cursor: pointer; }
+  button.file:disabled { opacity: 0.55; cursor: progress; }
+
+  .pack { grid-column: 1 / -1; display: grid; gap: 6px; }
+  .pack-text {
+    margin: 0; max-height: 60vh; overflow: auto; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 0.88rem; line-height: 1.5;
+    white-space: pre-wrap; overflow-wrap: anywhere; user-select: text;
+  }
 
   .notes { grid-column: 1 / -1; border-top: 1px dashed var(--line); padding-top: 8px; display: grid; gap: 6px; }
   .notes p { margin: 0; color: var(--muted); font-size: 0.9rem; white-space: pre-wrap; }
@@ -208,7 +217,8 @@
   const WAITING = new Set(["Applied", "Screening"]);
   const FOLLOW_UP_DAYS = 7;
 
-  const state = { rows: [], loaded: false, db: null, assets: null, downloads: null, canWrite: null, error: "", pendingRender: false };
+  const state = { rows: [], loaded: false, db: null, assets: null, downloads: null, canWrite: null, error: "", pendingRender: false,
+    openPacks: new Set(), packText: new Map() };
   const $ = (id) => document.getElementById(id);
 
   function h(tag, props, ...kids) {
@@ -289,8 +299,69 @@
     }));
   }
 
-  function fileLink(assetId, label) {
-    return assetId ? h("a", { class: "file", href: "/_blob/" + assetId, target: "_blank", rel: "noopener", text: label }) : null;
+  // Files are fetched inside the page and handed to the viewer through `downloads`:
+  // a plain link opens outside the artifact view, where the file doesn't load.
+  async function fetchAsset(assetId) {
+    const res = await fetch("/_blob/" + assetId);
+    if (!res.ok) throw { code: "missing" };
+    return res.blob();
+  }
+  function fileFailed(e) {
+    const code = e && e.code;
+    if (code === "declined") return;
+    if (code === "rate_limited") toast("A download is already waiting for your answer.");
+    else if (code === "missing") toast("That file couldn't be found.");
+    else if (code === "bad_request" || code === "rejected_extension") toast("That file can't be saved from here.");
+    else if (code) toast("Downloads aren't available here.");
+    else toast("That file didn't load. Check your connection and try again.");
+  }
+  function fileLink(assetId, label, filename) {
+    if (!assetId) return null;
+    if (!state.downloads) return h("a", { class: "file", href: "/_blob/" + assetId, target: "_blank", rel: "noopener", text: label });
+    return h("button", {
+      class: "file", type: "button", text: label,
+      onclick: async (ev) => {
+        const btn = ev.currentTarget; btn.disabled = true;
+        try { await state.downloads.save({ filename: filename || label + ".pdf", data: await fetchAsset(assetId) }); }
+        catch (e) { fileFailed(e); }
+        finally { btn.disabled = false; }
+      },
+    });
+  }
+
+  // The application pack (Markdown) opens as text inside the row, so it can be read and copied on a phone.
+  function packToggle(r) {
+    if (!r.packAsset) return null;
+    const open = state.openPacks.has(r.id);
+    return h("button", {
+      class: "file", type: "button", "aria-expanded": open ? "true" : "false",
+      text: open ? "Hide how to apply" : "How to apply & answers",
+      onclick: async () => {
+        if (state.openPacks.has(r.id)) { state.openPacks.delete(r.id); render(); return; }
+        state.openPacks.add(r.id); render();
+        if (state.packText.has(r.packAsset)) return;
+        try { state.packText.set(r.packAsset, await (await fetchAsset(r.packAsset)).text()); }
+        catch (e) { state.packText.set(r.packAsset, null); }
+        render();
+      },
+    });
+  }
+  function packPanel(r) {
+    if (!r.packAsset || !state.openPacks.has(r.id)) return null;
+    const text = state.packText.get(r.packAsset);
+    const body = text === undefined ? h("p", { class: "hint", text: "Loading…" })
+      : text === null ? h("p", { class: "hint", text: "This file didn't load. Check your connection and try again." })
+      : h("pre", { class: "pack-text", text });
+    const save = state.downloads && text ? h("button", {
+      class: "btn ghost small", type: "button", text: "Save as file",
+      onclick: async (ev) => {
+        const btn = ev.currentTarget; btn.disabled = true;
+        try { await state.downloads.save({ filename: r.packName || (slug(r.company || "application") + ".md"), data: text }); }
+        catch (e) { fileFailed(e); }
+        finally { btn.disabled = false; }
+      },
+    }) : null;
+    return h("div", { class: "pack" }, body, save ? h("div", { class: "row-tools" }, save) : null);
   }
 
   function copyButton(text) {
@@ -346,9 +417,9 @@
 
     const files = h("div", { class: "files" },
       r.postingUrl ? h("a", { class: "file", href: r.postingUrl, target: "_blank", rel: "noopener", text: "Posting ↗" }) : null,
-      fileLink(r.cvAsset, r.status === "Ready to send" ? "CV to send (PDF)" : "CV sent (PDF)"),
-      fileLink(r.letterAsset, r.status === "Ready to send" ? "Cover letter to send (PDF)" : "Cover letter sent (PDF)"),
-      fileLink(r.packAsset, "How to apply & answers"));
+      fileLink(r.cvAsset, r.status === "Ready to send" ? "CV to send (PDF)" : "CV sent (PDF)", r.cvName),
+      fileLink(r.letterAsset, r.status === "Ready to send" ? "Cover letter to send (PDF)" : "Cover letter sent (PDF)", r.letterName),
+      packToggle(r));
 
     const side = h("div", { class: "side" }, statusEl, files);
 
@@ -372,7 +443,7 @@
       notes.append(tools);
     } else if (r.notes) notes.append(h("p", { text: r.notes }));
 
-    return h("article", { class: "app", "data-tone": r.status === "Ready to send" ? "warn" : null }, who, dates, side, notes);
+    return h("article", { class: "app", "data-tone": r.status === "Ready to send" ? "warn" : null }, who, dates, side, packPanel(r), notes);
   }
 
   function render() {
