@@ -7,9 +7,9 @@ Ahmed is applying for AI engineer roles. His CV name is **Ahmed Dorra**; his Git
 - Dashboard: https://claude.ai/artifact/3U2A9XwLESewJ8e7Wt9Vus (private artifact "AI Engineer Applications").
 - Page source: `tracker/applications.html`. To change the page, edit it and publish with the Artifact tool using the tracker `url` (it was published from another session, so read it first). The capabilities it declares are kept on redeploy when `capabilities` is omitted.
 - Data lives in the artifact's database (`ArtifactData` tool). Collection `applications`; document id `YYYY-MM-DD-<company-slug>`.
-- Fields: `company, role, location, source, postingUrl, contact, status, postedOn, appliedOn, followUpOn, cvAsset, cvName, packAsset, packName, notes, createdAt, updatedAt`. Dates are `YYYY-MM-DD`; unknown values are `null`.
+- Fields: `company, role, location, source, postingUrl, contact, status, postedOn, appliedOn, followUpOn, cvAsset, cvName, letterAsset, letterName, packAsset, packName, notes, createdAt, updatedAt`. Dates are `YYYY-MM-DD`; unknown values are `null`.
 - `status` is one of: `Ready to send`, `Applied`, `Screening`, `Interview`, `Offer`, `Rejected`, `No response`, `Withdrawn`.
-- Files: upload the tailored CV PDF and the application `.md` to the artifact's asset store (`Artifact` publish with the tracker `url` and `asset: true`; a `.md` file goes in a call of its own) and store the returned ids in `cvAsset` / `packAsset`.
+- Files: upload the tailored CV PDF, the cover letter PDF when there is one, and the application `.md` to the artifact's asset store (`Artifact` publish with the tracker `url` and `asset: true`; a `.md` file goes in a call of its own) and store the returned ids in `cvAsset` / `letterAsset` / `packAsset`. The page shows each as a button on the row.
 - Before adding a row, `list` the collection: recruiters repost the same job, and a duplicate should be pointed out, not re-applied.
 - **"done"** from Ahmed means he sent the latest `Ready to send` application: update that row to `status: Applied`, `appliedOn: today`, `followUpOn: today + 7` (pin the write with `if_version`).
 - Status updates he reports ("Raya replied", "rejected by X") go to the matching row the same way.

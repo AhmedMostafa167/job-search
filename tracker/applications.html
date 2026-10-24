@@ -186,6 +186,7 @@
       <div class="field"><label for="f-posted">Posted on</label><input id="f-posted" type="date"></div>
       <div class="field"><label for="f-applied">Applied on</label><input id="f-applied" type="date"></div>
       <div class="field wide" id="cv-field"><label for="f-cv">CV sent (PDF)</label><input id="f-cv" type="file" accept=".pdf,application/pdf"></div>
+      <div class="field wide" id="letter-field"><label for="f-letter">Cover letter sent (PDF, optional)</label><input id="f-letter" type="file" accept=".pdf,application/pdf"></div>
       <div class="field wide"><label for="f-notes">Notes</label><textarea id="f-notes" rows="2" placeholder="Fit, gaps, who you spoke to"></textarea></div>
       <div class="form-foot">
         <button class="btn" type="submit" id="f-submit">Add application</button>
@@ -346,7 +347,8 @@
     const files = h("div", { class: "files" },
       r.postingUrl ? h("a", { class: "file", href: r.postingUrl, target: "_blank", rel: "noopener", text: "Posting ↗" }) : null,
       fileLink(r.cvAsset, r.status === "Ready to send" ? "CV to send (PDF)" : "CV sent (PDF)"),
-      fileLink(r.packAsset, "Cover letter & answers"));
+      fileLink(r.letterAsset, r.status === "Ready to send" ? "Cover letter to send (PDF)" : "Cover letter sent (PDF)"),
+      fileLink(r.packAsset, "How to apply & answers"));
 
     const side = h("div", { class: "side" }, statusEl, files);
 
@@ -386,6 +388,7 @@
     $("export-csv").hidden = !(state.downloads && state.rows.length);
     $("add-panel").hidden = !(state.db && state.canWrite !== false && !state.error);
     $("cv-field").hidden = !state.assets;
+    $("letter-field").hidden = !state.assets;
 
     if (state.error) { list.replaceChildren(); return; }
     if (!state.loaded) {
@@ -405,7 +408,7 @@
   function csv() {
     const cols = [["company", "Company"], ["role", "Role"], ["location", "Location"], ["source", "Applied through"], ["status", "Status"],
       ["postedOn", "Posted on"], ["appliedOn", "Applied on"], ["followUpOn", "Follow up"], ["postingUrl", "Posting"],
-      ["contact", "Contact"], ["cvName", "CV sent"], ["notes", "Notes"]];
+      ["contact", "Contact"], ["cvName", "CV sent"], ["letterName", "Cover letter sent"], ["notes", "Notes"]];
     const esc = (v) => { v = v == null ? "" : String(v); return /[",\r\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
     return "﻿" + [cols.map((c) => c[1]).join(","), ...sorted().map((r) => cols.map((c) => esc(r[c[0]])).join(","))].join("\r\n");
   }
@@ -433,16 +436,18 @@
         postingUrl: v("f-url") || null, contact: v("f-contact") || null, status,
         postedOn: v("f-posted") || null, appliedOn,
         followUpOn: WAITING.has(status) && appliedOn ? addDays(appliedOn, FOLLOW_UP_DAYS) : null,
-        cvAsset: null, cvName: null, packAsset: null, packName: null, notes: v("f-notes") || "",
+        cvAsset: null, cvName: null, letterAsset: null, letterName: null, packAsset: null, packName: null, notes: v("f-notes") || "",
         createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
       };
-      const file = $("f-cv").files && $("f-cv").files[0];
-      if (file && state.assets) {
+      const uploads = [["f-cv", "cvAsset", "cvName", "CV"], ["f-letter", "letterAsset", "letterName", "cover letter"]];
+      for (const [input, assetKey, nameKey, what] of uploads) {
+        const file = $(input).files && $(input).files[0];
+        if (!file || !state.assets) continue;
         try {
           const up = await state.assets.upload(file, { type: "application/pdf" });
-          row.cvAsset = up.id; row.cvName = file.name;
+          row[assetKey] = up.id; row[nameKey] = file.name;
         } catch (e) {
-          toast(e && e.code === "too_large" ? "That PDF is over 20 MB." : e && e.code === "unsupported_type" ? "Attach the CV as a PDF." : "The CV didn't upload. Try again.");
+          toast(e && e.code === "too_large" ? "That PDF is over 20 MB." : e && e.code === "unsupported_type" ? "Attach the " + what + " as a PDF." : "The " + what + " didn't upload. Try again.");
           return;
         }
       }
