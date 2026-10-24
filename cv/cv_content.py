@@ -48,7 +48,7 @@ PROJECTS = [
             "top-10 recall 72% vs 56% keyword and 41% vector; reranking lifted right-product-first from 23% to "
             "43% (40-query subset); an HNSW index cut median vector search from 35 ms to 3.1 ms.",
             "Designed a code-graded agent evaluation (12 tasks × 3 runs, logged to Langfuse and MLflow): prompt "
-            "v2 passed 12 of 12 tasks vs 7, with 29% fewer paid searches; moving price limits inside search "
+            "v2 passed 12 of 12 tasks vs 7, with 29% fewer paid rerank calls; moving price limits inside search "
             "lifted on-target results from 70% to 100%.",
             "Added input and memory-write guardrails (0 of 21 legitimate facts refused), Langfuse tracing and "
             "prompt versioning, Prometheus/Grafana monitoring, 104 automated tests and GitHub Actions CI.",
