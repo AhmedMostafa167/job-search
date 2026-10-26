@@ -24,6 +24,22 @@ Ahmed is applying for AI engineer roles. His CV name is **Ahmed Dorra**; his Git
 6. **Deliver.** Upload both files to the tracker, add the row as `Ready to send`, send him the PDF and the `.md` with `SendUserFile`, then commit and push to this repo.
 7. **Reply in a few lines:** the verdict, what was tailored, exactly how to send it, and the tracker status.
 
+## Searching for openings (when he asks what to apply for)
+
+A missed opening costs him more than a slow search. Be exhaustive and say what was covered.
+
+- **Never drop a post for its age.** Older posts are often still open. Check whether each one is open instead:
+  - Workday: `/wday/cxs/<tenant>/<site>/job/<path>` returns `canApply`.
+  - Greenhouse: `boards-api.greenhouse.io/v1/boards/<board>/jobs/<id>`.
+  - Workable, Lever and Zoho pages show the post or an error.
+- **Search every source, every time.** Use the CLIs in `ai-job-search-dev/ai-job-search` (clone it):
+  - freehire: `--country EG` or `--region mena|global`, with no `--jobage`, paging until the results run out.
+  - LinkedIn guest search: no `--jobage`, pages 1–5 per query.
+  - The careers portals of the big Egyptian AI employers listed in `referrals/egypt-targets.md`: CIB (Taleo), PwC ETIC and Valeo (Workday), Orange (iCIMS), Vodafone, Raya (Oracle), Henkel (Cornerstone) and Capgemini.
+- **Keep combined-level titles.** "AI Engineer / AI Senior Engineer" has a junior level, so don't filter it out for containing "Senior".
+- **Wuzzuf, GulfTalent and Bayt block automated reads.** Say so and ask him to paste posts or forward alerts. Don't try to get around the blocks.
+- **Report coverage in the reply:** which sources were searched, how many posts were read, and what was skipped and why.
+
 ## Truthfulness rules (non-negotiable)
 
 Only use claims verified against his repositories or confirmed by him.

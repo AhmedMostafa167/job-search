@@ -21,7 +21,7 @@ For Ahmed's uncle. These companies have AI teams in Egypt and are hiring for the
 ### 1. CIB (Commercial International Bank) · Giza head office
 - **Why now:** CIB posted **7 AI jobs on 25 Oct 2026** for a new AI Engineering team: AI Engineer / AI Senior Engineer (job 260002IN), AI Engineering Manager, AI Product Owner, AI Solution Architect, AI Program Manager and Principal AI Engineer.
   - The AI Engineer level asks for 1–3 years of experience, Python, LLMOps (Docker, CI/CD, testing, monitoring), RAG and APIs. That is close to Ahmed's projects.
-- **Ahmed's status:** not applied yet. He applies first: https://cibeg.taleo.net/careersection/cib_ex/jobdetail.ftl?job=260002IN&lang=en
+- **Ahmed's status:** CV, cover letter and pack ready (26 Oct 2026). He applies on Taleo: https://cibeg.taleo.net/careersection/cib_ex/jobdetail.ftl?job=260002IN&lang=en
 - **Who decides:** **Kamran Bader**, Chief Data, Analytics & AI Officer, appointed mid-2026 (previously Group Director, Data & AI at Beyon). The AI Engineering Manager is also being hired now.
 
 ### 2. Valeo Egypt · Smart Village
@@ -37,7 +37,7 @@ For Ahmed's uncle. These companies have AI teams in Egypt and are hiring for the
   - ETIC has more than 2,100 staff.
   - It posted 11 AI jobs over the past 9 months, including **"ETIC, AI Engineer – Associate"**, which is still open (posted 18 Aug 2026).
   - It runs a summer "Applied AI" internship, so it hires juniors regularly.
-- **Ahmed's status:** not applied yet. He applies to the Associate role: https://pwc.wd3.myworkdayjobs.com/Global_Experienced_Careers/job/Cairo---ETIC/ETIC--AI-Engineer---Associate_752966WD
+- **Ahmed's status:** CV, cover letter and pack ready (26 Oct 2026) for the AI Engineer – Associate role and the Python Developer – Associate role: https://pwc.wd3.myworkdayjobs.com/Global_Experienced_Careers/job/Cairo---ETIC/ETIC--AI-Engineer---Associate_752966WD
 - **Who decides:** **Wael Mostafa**, PwC Middle East Partner and ETIC Leader. He was named at the 2023 opening, so confirm he still holds the role.
 
 ### 4. Raya (Raya Holding / Raya Information Technology)
@@ -67,11 +67,16 @@ For Ahmed's uncle. These companies have AI teams in Egypt and are hiring for the
 - **Why now:** Capgemini posted 8 AI jobs in Cairo on 10 Oct 2026, mostly mid or senior level (for example "Gen AI/Agentic AI Full-stack Engineer").
 - **Who decides:** the Egypt managing director isn't named publicly. Ask through your network.
 
-### 9. e& Egypt (Etisalat)
+### 9. Henkel · New Cairo digital hub
+- **Why now:** Henkel has posted 4 AI and MLOps roles this year. "AI Engineer" (req. 86074, 2–3 years, LangGraph, FastAPI, RAG) is still open.
+- **Ahmed's status:** CV and pack ready (26 Oct 2026).
+- **Who decides:** the local digital or AI lead isn't named publicly. Ask through your network.
+
+### 10. e& Egypt (Etisalat)
 - **Ahmed's status:** the MLOps Engineer application is ready.
 - **Who decides:** **Hazem Metwally**, CEO (secondary sources).
 
-### 10. Microsoft Egypt
+### 11. Microsoft Egypt
 - **Who decides:** **Mohamed Kassem**, General Manager since December 2025.
 - **Chance:** low for now. Its current roles are mostly senior.
 
