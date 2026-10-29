@@ -1,6 +1,6 @@
 # Job search — how Claude works in this repo
 
-Ahmed is applying for AI engineer roles. His CV name is **Ahmed Dorra**; his GitHub, LinkedIn URL and portfolio still say Ahmed Mostafa. He sends job postings (pasted text, a link, or a company website), often from his phone during commutes. For each one, run the routine below with as little back-and-forth as possible, and keep replies short: he reads them on a phone.
+Ahmed is applying for AI engineer roles. His CV name is **Ahmed Dorra**, and the portfolio (ahmedmostafa167.github.io) now shows Ahmed Dorra too; his GitHub, LinkedIn and Kaggle handles still say Ahmed Mostafa. The portfolio is built from `portfolio/` in the Projects repo, and its CV button serves `portfolio/assets/Ahmed_Dorra_CV.pdf`: rebuild the general CV and replace that file whenever the CV changes. He sends job postings (pasted text, a link, or a company website), often from his phone during commutes. For each one, run the routine below with as little back-and-forth as possible, and keep replies short: he reads them on a phone.
 
 ## Tracker
 
