@@ -69,8 +69,8 @@ COVER_LETTER = {
         "reply comes from real search results (it passed in all 25 applicable runs), Langfuse tracing with customer "
         "feedback scored on each conversation, and 104 automated tests in CI.",
         "I graduated in Computer Science in June 2024, completed my military service from January 2025 to January "
-        "2026, and since February 2026 I've been back as a Computer Science teaching assistant, a role in which I "
-        "designed and led 50 lab sessions for more than 600 students in 2024. I also fine-tuned Stable Diffusion with "
+        "2026, and since March 2026 I've been a Computer Science teaching assistant, a role in which I "
+        "designed and led 50 lab sessions for more than 600 students. I also fine-tuned Stable Diffusion with "
         "LoRA in a project published in 2025. I'm a native Arabic speaker with professional English, which matters "
         "for conversational AI across MENA and the GCC.",
         "I'm based in Giza and available full-time. I'd welcome the chance to talk about how I could contribute to "

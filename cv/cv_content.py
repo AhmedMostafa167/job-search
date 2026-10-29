@@ -88,7 +88,7 @@ EXPERIENCE = [
     {
         "role": "Teaching Assistant, Computer Science",
         "org": "Culture and Science City · Giza",
-        "dates": "10/2024 – 12/2024 · 02/2026 – Present",
+        "dates": "03/2026 – Present",
         "bullets": [
             "Designed and led 50 Compiler Theory lab sessions over 8 weeks for 600+ students (~70 per session), "
             "covering regular expressions, finite automata and lexical analysis.",

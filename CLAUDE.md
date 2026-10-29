@@ -76,7 +76,7 @@ Only use claims verified against his repositories or confirmed by him.
 
 - Giza, Egypt · +20 100 614 8440 · newahmed1672022@gmail.com · linkedin.com/in/ahmed-mostafa-dorra · github.com/AhmedMostafa167 · ahmedmostafa167.github.io
 - Egyptian; open to relocation and remote work. He has no US work authorisation.
-- BSc Computer Science (06/2024). Teaching Assistant 10/2024 – 12/2024 and since 02/2026. Military service in between.
+- BSc Computer Science (06/2024). Military service after graduating, then Teaching Assistant since 03/2026 (he started on 1 March 2026; there was no earlier TA period).
 - Native Arabic speaker: mention it for Arabic, MENA or GCC-facing companies.
 - Notice period, expected salary and years of experience haven't been given yet, so leave `[FILL IN]` placeholders.
 

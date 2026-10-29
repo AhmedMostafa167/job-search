@@ -76,7 +76,7 @@ COVER_LETTER = {
         "tasks instead of 7. Before that, I fine-tuned Stable Diffusion with LoRA in work published in 2025, and as "
         "a research intern I built a quantum machine-learning pipeline that denoised and classified EEG signals.",
         "I completed my BSc in Computer Science in June 2024 and then my mandatory military service, and since "
-        "February 2026 I've been a Computer Science teaching assistant, where I designed and led 50 lab sessions for "
+        "March 2026 I've been a Computer Science teaching assistant, where I designed and led 50 lab sessions for "
         "more than 600 students. This would be my first role in industry. I'm a native Arabic speaker with "
         "professional English, I live in Giza, and I'd welcome the chance to show what I can contribute to Data "
         "Intelligence.",
