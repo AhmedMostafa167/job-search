@@ -90,10 +90,16 @@ EXPERIENCE = [
         "org": "Culture and Science City · Giza",
         "dates": "03/2026 – Present",
         "bullets": [
-            "Designed and led 50 Compiler Theory lab sessions over 8 weeks for 600+ students (~70 per session), "
-            "covering regular expressions, finite automata and lexical analysis.",
-            "Co-taught neural-network and CNN sessions on backpropagation, gradient descent and loss functions; "
-            "led tutorials in Linear Algebra, Calculus and Information Retrieval.",
+            "Teach Advanced Operating Systems to 700+ students: processes and threads, CPU scheduling, "
+            "synchronization and deadlocks, memory management and virtual memory, and file systems.",
+            "Teach a starter MLOps course to about 500 students, modelled on DataTalks.Club's ML Zoomcamp: data "
+            "preprocessing and cleaning, a linear model trained on a customer-churn dataset, then an industry-standard "
+            "project layout, experiment tracking with MLflow, and serving the model with FastAPI and Docker.",
+            "Assisted the supervision of two 2025/26 graduation projects: an AI system for social-media trend and "
+            "emotion analysis, and diabetes detection with machine learning.",
+            "Designed and led 50 Compiler Theory lab sessions for 600+ students; co-taught neural-network and CNN "
+            "sessions; set Distributed Computing quizzes; led Linear Algebra, Calculus and Information Retrieval "
+            "tutorials.",
         ],
     },
     {

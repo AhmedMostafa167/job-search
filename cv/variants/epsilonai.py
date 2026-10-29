@@ -11,8 +11,8 @@ TITLE = "Data Scientist & AI Instructor — Machine Learning, Generative AI & Te
 
 SUMMARY = (
     "Data scientist and Computer Science teaching assistant who builds ML and generative-AI systems and teaches them. "
-    "Designed and led 50 Compiler Theory lab sessions for 600+ students and co-taught neural-network and CNN "
-    "sessions. Builds in Python with PyTorch, Hugging Face, scikit-learn and XGBoost (LoRA fine-tuning of Stable "
+    "Teaches Advanced Operating Systems to 700+ students and a starter MLOps course (preprocessing, a churn model, "
+    "MLflow, FastAPI, Docker) to about 500. Builds in Python with PyTorch, Hugging Face, scikit-learn and XGBoost (LoRA fine-tuning of Stable "
     "Diffusion, published 2025), and LLM applications with RAG and LangGraph agents. Measures results properly: "
     "labelled test sets with 95% confidence intervals; on a 12,730-product search system, hybrid retrieval reached "
     "72% top-10 recall vs 41% for vector search alone. Native Arabic speaker with professional English."
