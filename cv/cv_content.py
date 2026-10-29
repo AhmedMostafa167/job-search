@@ -155,6 +155,7 @@ EDUCATION = [
 ]
 
 TRAINING = [
+    "ML Zoomcamp (2025) · LLM Zoomcamp (2026) · AI Agents Crash Course (2025) — DataTalks.Club",
     "MLOps Practitioner Course — MLOps MENA Community (2026)",
     "Mini-RAG: production RAG systems — Abu Bakr Soliman (2026)",
     "Hugging Face LLM Course (in progress)",
