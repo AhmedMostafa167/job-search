@@ -47,3 +47,30 @@ _visioneer["bullets"] = [
     "Vision (2025).",
 ]
 PROJECTS = [_shop, _visioneer, _research]
+
+COVER_LETTER = {
+    "date": "30 October 2026",
+    "to": ["Talent Acquisition, Henkel", "AI Engineer (req. 89184) and Software Developer – GEN AI Solutions (req. 89134), "
+           "New Cairo"],
+    "greeting": "Dear Henkel Talent Acquisition Team,",
+    "paragraphs": [
+        "I'm applying for the AI Engineer role (req. 89184) and the Software Developer – GEN AI Solutions role "
+        "(req. 89134) in New Cairo. Both posts ask for fine-tuning of LLMs and diffusion models, PyTorch, and GenAI "
+        "applications connected to other services through REST APIs. That is the work I know best.",
+        "With a colleague, I fine-tuned Stable Diffusion v1.5 with LoRA on about 12,000 captioned floor plans to "
+        "generate furnished layouts from text prompts. The work was served to an Android AR app and published in "
+        "Machine Graphics & Vision (2025). On the LLM side, I built a LangGraph chatbot agent over 12,730 products "
+        "with hybrid retrieval, tool calling and structured outputs, served through a FastAPI REST API in Docker "
+        "with 104 automated tests, tracing and monitoring. I measure every change: a revised prompt raised the "
+        "agent's task success from 7 to 12 of 12 test tasks with 29% fewer paid rerank calls, and reranking lifted "
+        "the right product to first place from 23% to 43% of queries.",
+        "I'm also a Computer Science teaching assistant. I teach Advanced Operating Systems to more than 700 "
+        "students and a starter MLOps course to about 500, so I'm used to explaining technical work clearly and "
+        "sharing knowledge with different audiences.",
+        "I have less than the three to four years the posts list, and I haven't worked with C#/.NET or Power BI "
+        "yet. I learn new tools quickly and judge my work by measured results. I live in Giza and would welcome the "
+        "chance to discuss how I could contribute to Henkel's GenAI team.",
+    ],
+    "closing": "Sincerely,",
+}
+
