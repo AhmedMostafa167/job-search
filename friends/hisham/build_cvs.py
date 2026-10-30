@@ -1,8 +1,10 @@
 """Tailored CVs for Hisham Elsebaey (Ahmed's friend), built only from his own CV (Oct 2026).
 
 His risk role at Telecom Egypt (WE) is credit and fraud checking of new postpaid customers: Ability-to-Pay (ATP)
-assessments and authenticity checks on bank statements and card receipts. Not claimed anywhere: SQL, Power BI, fraud
-rule engines, RCSA/GRC tools, SME financial-statement analysis, team supervision beyond his own "team leadership" line.
+assessments and authenticity checks on bank statements and card receipts. Lives in Cairo/Giza (has an apartment there, per
+Ahmed). Power BI, advanced Excel and SQL appear only under "Currently learning": he is studying them before
+interviews; move them into the skill lines once he has done the courses. Not claimed: fraud rule engines, RCSA/GRC
+tools, team supervision beyond his own "team leadership" line.
 Run: python3 friends/hisham/build_cvs.py out/hisham
 """
 import html
@@ -11,7 +13,7 @@ import sys
 from pathlib import Path
 
 NAME = "Hisham Fathi Abd Al-Aziz Elsebaey"
-CONTACT = ["Shebin El-Kom, Menofia, Egypt", "01097720834 | 01550004509", "hishamfathi934@gmail.com",
+CONTACT = ["Cairo / Giza, Egypt", "01097720834 | 01550004509", "hishamfathi934@gmail.com",
            "Military service: Exempted"]
 
 RISK = {
@@ -21,7 +23,7 @@ RISK = {
                   "credit/debit card receipts, as part of the risk review of every new postpaid application.",
     "atp": "Run Ability-to-Pay (ATP) credit assessments on new postpaid applicants to assess creditworthiness and "
            "reduce credit risk and financial exposure.",
-    "validate": "Validate new postpaid customers' documentation against regulatory requirements and company "
+    "validate": "Validate new postpaid customers' KYC documentation against regulatory requirements and company "
                 "policy, ensuring 100% compliance, and helped streamline the validation process.",
     "process": "Contribute to process-improvement initiatives that made the risk-management workflow more efficient.",
 }
@@ -37,9 +39,11 @@ CALL = ["Resolved ADSL connectivity issues and customer complaints with a focus 
 SALES = ["Built client relationships through consultative selling and face-to-face presentations, and delivered "
          "tailored solutions that exceeded sales targets."]
 
-TOOLS = ("Tools", "MS Office (ICDL certified), online banking systems, CRM tools")
+TOOLS = ("Tools", "MS Office incl. Excel (ICDL certified), online banking systems, CRM tools")
+LANGS = ("Languages", "Arabic (native), English (very good, professional working proficiency)")
+LEARN = ("Currently learning", "Power BI, advanced Excel (pivot tables, XLOOKUP, dashboards), SQL for data analysis")
 SOFT = ("Strengths", "Attention to detail, problem solving, crisis management, time management, team leadership")
-FRAUD_SK = ("Fraud & verification", "Customer document verification, authenticity checks on bank statements and "
+FRAUD_SK = ("Fraud & verification", "KYC and customer document verification, authenticity checks on bank statements and "
             "card receipts, fraud-prevention awareness for online banking")
 CREDIT_SK = ("Credit risk", "Ability-to-Pay (ATP) assessment, creditworthiness review, financial document analysis")
 COMPL_SK = ("Compliance", "Regulatory and company-policy compliance checks on customer applications")
@@ -54,7 +58,7 @@ VARIANTS = {
                 "Ability-to-Pay (ATP) credit assessments before approval. Over 2 years at the National Bank of Egypt "
                 "in online and phone banking, advising clients on fraud prevention. " + BASE_TAIL,
         risk=["fraud_docs", "atp", "validate", "process"], nbe=["fraud", "volume", "digital"],
-        skills=[FRAUD_SK, CREDIT_SK, COMPL_SK, TOOLS, SOFT]),
+        skills=[FRAUD_SK, CREDIT_SK, COMPL_SK, TOOLS, LEARN, SOFT]),
     "Halan_Fraud": dict(
         title="Fraud Risk Analyst — Consumer Credit",
         summary="Risk specialist with nearly 6 years in the Risk Management department of Telecom Egypt (WE), "
@@ -62,7 +66,7 @@ VARIANTS = {
                 "before postpaid credit is granted. Over 2 years at the National Bank of Egypt, advising "
                 "online-banking clients on fraud prevention. " + BASE_TAIL,
         risk=["fraud_docs", "atp", "validate", "process"], nbe=["fraud", "digital", "volume"],
-        skills=[FRAUD_SK, CREDIT_SK, COMPL_SK, TOOLS, SOFT]),
+        skills=[FRAUD_SK, CREDIT_SK, COMPL_SK, TOOLS, LEARN, SOFT]),
     "Halan_Credit": dict(
         title="Credit Analyst — Application Screening & Document Verification",
         summary="Credit risk specialist with nearly 6 years in the Risk Management department of Telecom Egypt (WE), "
@@ -70,7 +74,7 @@ VARIANTS = {
                 "required document is complete and genuine, and policy compliance before approval. Over 2 years at "
                 "the National Bank of Egypt in retail banking services. " + BASE_TAIL,
         risk=["atp", "validate", "docs", "process"], nbe=["volume", "digital", "fraud"],
-        skills=[CREDIT_SK, FRAUD_SK, COMPL_SK, TOOLS, SOFT]),
+        skills=[CREDIT_SK, FRAUD_SK, COMPL_SK, TOOLS, LEARN, SOFT]),
     "HDBank": dict(
         title="Retail Credit Officer — Credit Assessment & Document Verification",
         summary="Credit risk specialist with nearly 6 years in the Risk Management department of Telecom Egypt (WE), "
@@ -78,7 +82,7 @@ VARIANTS = {
                 "that bank statements and other financial documents are complete and genuine. Over 2 years at the "
                 "National Bank of Egypt serving retail banking clients. " + BASE_TAIL,
         risk=["atp", "docs", "validate", "process"], nbe=["volume", "digital", "fraud"],
-        skills=[CREDIT_SK, FRAUD_SK, COMPL_SK, TOOLS, SOFT]),
+        skills=[CREDIT_SK, FRAUD_SK, COMPL_SK, TOOLS, LEARN, SOFT]),
     "Mashreq": dict(
         title="Retail Credit Administration Officer",
         summary="Risk specialist with nearly 6 years in the Risk Management department of Telecom Egypt (WE), "
@@ -87,7 +91,7 @@ VARIANTS = {
                 "checks on bank statements and card receipts. Over 2 years at the National Bank of Egypt in retail "
                 "banking services. " + BASE_TAIL,
         risk=["validate", "docs", "atp", "process"], nbe=["volume", "digital", "fraud"],
-        skills=[COMPL_SK, CREDIT_SK, FRAUD_SK, TOOLS, SOFT]),
+        skills=[COMPL_SK, CREDIT_SK, FRAUD_SK, TOOLS, LEARN, SOFT]),
     "Axis": dict(
         title="Fraud Analyst — Digital Payments",
         summary="Risk specialist with nearly 6 years in the Risk Management department of Telecom Egypt (WE), "
@@ -95,7 +99,7 @@ VARIANTS = {
                 "ability to pay. Over 2 years at the National Bank of Egypt supporting online and phone banking "
                 "customers and advising them on fraud prevention for online transactions. " + BASE_TAIL,
         risk=["fraud_docs", "atp", "validate", "process"], nbe=["fraud", "digital", "volume"],
-        skills=[FRAUD_SK, CREDIT_SK, COMPL_SK, TOOLS, SOFT]),
+        skills=[FRAUD_SK, CREDIT_SK, COMPL_SK, TOOLS, LEARN, SOFT]),
     "CIB_QA": dict(
         title="Credit Quality Assurance Officer",
         summary="Risk specialist with nearly 6 years in the Risk Management department of Telecom Egypt (WE), "
@@ -103,7 +107,7 @@ VARIANTS = {
                 "(100% compliance), with Ability-to-Pay (ATP) assessments and authenticity checks on financial "
                 "documents. Over 2 years at the National Bank of Egypt in retail banking services. " + BASE_TAIL,
         risk=["validate", "atp", "docs", "process"], nbe=["volume", "digital", "fraud"],
-        skills=[COMPL_SK, CREDIT_SK, FRAUD_SK, TOOLS, SOFT]),
+        skills=[COMPL_SK, CREDIT_SK, FRAUD_SK, TOOLS, LEARN, SOFT]),
     "CIB_CreditRisk": dict(
         title="Consumer Credit Risk Analyst",
         summary="Credit risk specialist with nearly 6 years in the Risk Management department of Telecom Egypt (WE), "
@@ -111,7 +115,7 @@ VARIANTS = {
                 "financial exposure, and verifying their financial documents. Over 2 years at the National Bank of "
                 "Egypt in retail and digital banking. " + BASE_TAIL,
         risk=["atp", "docs", "validate", "process"], nbe=["volume", "digital", "fraud"],
-        skills=[CREDIT_SK, COMPL_SK, FRAUD_SK, TOOLS, SOFT]),
+        skills=[CREDIT_SK, COMPL_SK, FRAUD_SK, TOOLS, LEARN, SOFT]),
     "blnk": dict(
         title="AML & Compliance Officer",
         summary="Risk and compliance specialist with nearly 6 years in the Risk Management department of Telecom "
@@ -119,7 +123,7 @@ VARIANTS = {
                 "and checking financial documents for authenticity. Over 2 years at the National Bank of Egypt, "
                 "advising clients on security and fraud prevention. " + BASE_TAIL,
         risk=["validate", "fraud_docs", "atp", "process"], nbe=["fraud", "volume", "digital"],
-        skills=[COMPL_SK, FRAUD_SK, CREDIT_SK, TOOLS, SOFT]),
+        skills=[COMPL_SK, FRAUD_SK, CREDIT_SK, TOOLS, LEARN, SOFT]),
     "Tasaheel": dict(
         title="Credit Analyst",
         summary="Credit risk specialist with nearly 6 years in the Risk Management department of Telecom Egypt (WE), "
@@ -127,7 +131,9 @@ VARIANTS = {
                 "their data against bank statements and other supporting documents. Over 2 years at the National "
                 "Bank of Egypt serving retail banking clients. " + BASE_TAIL,
         risk=["atp", "docs", "validate", "process"], nbe=["volume", "digital", "fraud"],
-        skills=[CREDIT_SK, FRAUD_SK, COMPL_SK, TOOLS, SOFT]),
+        skills=[CREDIT_SK, FRAUD_SK, COMPL_SK, TOOLS,
+                ("Currently learning", "SME financial statement and cash-flow analysis, advanced Excel, Power BI"),
+                SOFT]),
     "Nextcare": dict(
         title="Fraud Analyst",
         summary="Risk specialist with nearly 6 years in the Risk Management department of Telecom Egypt (WE), "
@@ -135,7 +141,7 @@ VARIANTS = {
                 "financial exposure. Customer-facing background at the National Bank of Egypt and Telecom Egypt, "
                 "including advising clients on fraud prevention. " + BASE_TAIL,
         risk=["fraud_docs", "atp", "validate", "process"], nbe=["fraud", "volume", "digital"],
-        skills=[FRAUD_SK, CREDIT_SK, COMPL_SK, TOOLS, SOFT]),
+        skills=[FRAUD_SK, CREDIT_SK, COMPL_SK, TOOLS, LEARN, SOFT]),
     "Risk_Analyst": dict(
         title="Risk Analyst",
         summary="Risk specialist with nearly 6 years in the Risk Management department of Telecom Egypt (WE), a "
@@ -145,7 +151,7 @@ VARIANTS = {
                 + BASE_TAIL,
         risk=["validate", "atp", "docs", "process"], nbe=["fraud", "volume", "digital"],
         skills=[("Risk", "Risk assessment, credit risk (ATP), compliance checks, process improvement"),
-                FRAUD_SK, TOOLS, SOFT]),
+                FRAUD_SK, TOOLS, LEARN, SOFT]),
 }
 
 CSS = """
@@ -179,7 +185,8 @@ def render(v):
            + job("Customer Service Representative", "National Bank of Egypt (NBE)", "Dec 2016 – Apr 2019",
                  [NBE[k] for k in v["nbe"]])
            + job("Tele Sales & Sales Representative", "TE Data and El-Motaheda Company", "2014 – 2016", SALES))
-    skills = "".join(f'<p class="sk"><b>{html.escape(a)}:</b> {html.escape(b)}</p>' for a, b in v["skills"])
+    skills = "".join(f'<p class="sk"><b>{html.escape(a)}:</b> {html.escape(b)}</p>'
+                     for a, b in [*v["skills"], LANGS])
     return f"""<!doctype html><html><head><meta charset="utf-8"><title>{NAME} CV</title><style>{CSS}</style></head><body>
 <h1>{NAME}</h1><div class="title">{html.escape(v['title'])}</div>
 <div class="contact">{' · '.join(html.escape(c) for c in CONTACT[:2])}<br>{' · '.join(html.escape(c) for c in CONTACT[2:])}</div>
@@ -194,7 +201,6 @@ def render(v):
 <li>English Language Courses — American University in Cairo (AUC)</li>
 <li>ICDL Certificate — Menofia University Information Center</li>
 <li>Human Development Training — Canadian Institute</li></ul>
-<h2>Languages</h2><p>Arabic: native · English: very good (professional working proficiency)</p>
 </body></html>"""
 
 

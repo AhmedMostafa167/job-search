@@ -10,10 +10,10 @@ S = [
   ("Mortgage Finance Credit Officer", "HD Bank", "Cairo", "3 yrs credit analysis; verify documents are genuine, assess financial eligibility", LI+"4481540441", "LinkedIn", "HDBank"),
   ("Credit Filtration Specialist", "Halan", "Giza", "1–3 yrs; screen credit applications, verify documents are complete and accurate", LI+"4437029230", "LinkedIn", "Halan_Credit"),
   ("Officer, Retail Credit Administration", "Mashreq Egypt", "Egypt", "Check cases against policy criteria and approved documents before disbursement", LI+"4425946315", "LinkedIn", "Mashreq"),
-  ("Credit Investment Quality Assurance Officer", "CIB", "Giza head office", "2–4 yrs; commerce/accounting degree; policy-compliance reviews (Excel; SQL and Power BI are pluses he lacks)", CIB.format("260002M5"), "CIB Taleo", "CIB_QA"),
+  ("Credit Investment Quality Assurance Officer", "CIB", "Giza head office", "2–4 yrs; commerce/accounting degree; policy-compliance reviews; Excel, SQL and Power BI (on his learning list)", CIB.format("260002M5"), "CIB Taleo", "CIB_QA"),
   ("SMEs Fraud Risk & Credit Assurance Analyst", "QNB Egypt", "Cairo", "2 yrs credit for Analyst (4 for Senior); review documents for suspicious ones", LI+"4479903963", "LinkedIn", "QNB"),
   ("Corporate Fraud Risk & Credit Assurance Analyst", "QNB Egypt", "Cairo", "2 yrs credit for Analyst (4 for Senior)", LI+"4479907932", "LinkedIn", "QNB"),
-  ("Senior Fraud Analyst", "Axis (mobile wallet)", "Cairo", "3+ yrs fraud risk or transaction monitoring; fraud rules and data analysis are a gap", LI+"4472155376", "LinkedIn", "Axis"),
+  ("Senior Fraud Analyst", "Axis (mobile wallet)", "Cairo", "3+ yrs fraud risk or transaction monitoring; fraud rules and data analysis (SQL is on his learning list)", LI+"4472155376", "LinkedIn", "Axis"),
  ]),
  ("Good backups", "", [
   ("Fraud Risk Analyst (junior level)", "Halan", "Giza", "1–2 yrs; same work as the senior role", LI+"4437555012", "LinkedIn", "Halan_Fraud"),
@@ -21,11 +21,13 @@ S = [
   ("Digital Lending Portfolio Monitoring Officer", "CIB", "Giza head office", "2–3 yrs (Officer); portfolio risk reports", CIB.format("260002G0"), "CIB Taleo", "CIB_CreditRisk"),
   ("Digital Lending Policy Officer", "CIB", "Giza head office", "2–3 yrs (Officer); credit policy and risk appetite", CIB.format("260002G1"), "CIB Taleo", "CIB_CreditRisk"),
   ("Junior AML & Compliance Officer", "blnk (fintech)", "Giza", "1+ yr, preferably banks or financial institutions", LI+"4476450409", "LinkedIn", "blnk"),
-  ("Specialist, Credit Analysis – SME", "Tasaheel", "Giza", "1–2 yrs; SME financial statements are a gap", LI+"4481426200", "LinkedIn", "Tasaheel"),
+  ("Specialist, Credit Analysis – SME", "Tasaheel", "Giza", "1–2 yrs; SME financial statements (on his learning list; his degree is in accounting)", LI+"4481426200", "LinkedIn", "Tasaheel"),
   ("Credit Underwriter Specialist – SME", "Tasaheel", "Giza", "1–2 yrs SME credit analysis", LI+"4431227024", "LinkedIn", "Tasaheel"),
   ("Fraud Analyst", "Nextcare (health insurance)", "Cairo", "2 yrs customer-facing; medical-claims fraud is new to him", LI+"4475575272", "LinkedIn", "Nextcare"),
   ("Senior Enterprise Risk Analyst", "Tabby (fintech)", "Cairo", "2–4 yrs in risk or compliance in a regulated sector; ERM reporting is new to him", LI+"4482441348", "LinkedIn", "Risk_Analyst"),
   ("2nd Line Risk Analyst", "Bupa", "Cairo, hybrid", "Operational risk oversight; Power BI/Excel desirable", LI+"4482126102", "LinkedIn", "Risk_Analyst"),
+  ("Enterprise Risk Management Specialist", "Müller's Solutions (agency)", "Cairo", "3–6 yrs ERM, risk registers, Power BI reports; ask who the client is, and pay no fee", LI+"4483744079", "LinkedIn", "Risk_Analyst"),
+  ("Enterprise Risk Advisor", "Archer (risk software)", "Cairo", "Risk reporting and dashboards (Power BI, Excel); ERM work is new to him", LI+"4481890101", "LinkedIn", "Risk_Analyst"),
  ]),
 ]
 n = 0; parts = []
@@ -74,13 +76,14 @@ ul {{ margin: 4px 0 0 16px; padding: 0; }} li {{ margin: 2px 0; }}
 {"".join(parts)}
 <h2>Left out, and why</h2>
 <ul>
-<li><b>Need ERM, IT or audit experience he doesn't have:</b> Archer, Müller's Solutions, Mashreq Operational Risk, HD Bank Risk Systems Team Leader, Mondelēz Internal Controls, QNB Market Risk.</li>
+<li><b>Need ERM, IT or audit experience he doesn't have:</b> Mashreq Operational Risk, HD Bank Risk Systems Team Leader, Mondelēz Internal Controls, QNB Market Risk.</li>
 <li><b>Manager roles:</b> MetLife Risk Manager, Bupa Risk Manager, Beltone, EDECS, Deloitte, Etisalat and SuperPay audit managers.</li>
 <li><b>Other:</b> Blu EV (accounting role). dopay KYC Team Leader needs 1–2 yrs supervising people, so add it only if he has led a team.</li>
 </ul>
 <h2>Before sending</h2>
 <ul>
-<li><b>Location:</b> all of these are in Cairo or Giza. If he will commute or move, he can say so in the application.</li>
+<li><b>Location:</b> the CVs now say Cairo / Giza. On application forms, he should pick the governorate where his apartment is.</li>
+<li><b>Learn before interviews:</b> each CV lists Power BI, advanced Excel and SQL under "Currently learning". Expect an Excel test at banks. Free courses: Microsoft Learn's Power BI Data Analyst (PL-300) path, Kaggle's Intro to SQL, and Excel pivot tables and XLOOKUP. When he finishes one, move it into his skills.</li>
 <li><b>Add numbers if he has them:</b> applications reviewed per day, forged documents caught, approval-rate or bad-debt figures.</li>
 <li><b>Never pay a fee</b> or send ID documents before an offer.</li>
 </ul>
