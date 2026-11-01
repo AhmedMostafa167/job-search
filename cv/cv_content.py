@@ -86,6 +86,16 @@ PROJECTS = [
 
 EXPERIENCE = [
     {
+        "role": "AI Research & Mentorship Engineer",
+        "org": "MLOps MENA Community",
+        "dates": "08/2026 – Present",
+        "bullets": [
+            "Mentor community learners on their MLOps and AI projects: review their work and answer their technical "
+            "questions.",
+            "Research AI and MLOps topics and write technical material for the community.",
+        ],
+    },
+    {
         "role": "Teaching Assistant, Computer Science",
         "org": "Culture and Science City · Giza",
         "dates": "03/2026 – Present",

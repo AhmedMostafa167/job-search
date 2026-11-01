@@ -77,6 +77,7 @@ Only use claims verified against his repositories or confirmed by him.
 - Giza, Egypt · +20 100 614 8440 · newahmed1672022@gmail.com · linkedin.com/in/ahmed-mostafa-dorra · github.com/AhmedMostafa167 · ahmedmostafa167.github.io
 - Egyptian; open to relocation and remote work. He has no US work authorisation.
 - BSc Computer Science (06/2024). Military service after graduating, then Teaching Assistant since 03/2026 (he started on 1 March 2026; there was no earlier TA period).
+- Also AI Research & Mentorship Engineer at the MLOps MENA Community since 08/2026 (confirmed 1 Nov 2026): mentors community learners on their MLOps/AI projects (reviews their work, answers questions) and researches AI/MLOps topics and writes technical material. No numbers given yet, so don't invent counts.
 - TA work (confirmed 29 Oct 2026): teaches Advanced Operating Systems to 700+ students (processes and threads, CPU scheduling, synchronization and deadlocks, memory management and virtual memory, file systems) and a starter MLOps course to about 500 students modelled on ML Zoomcamp (preprocessing and cleaning, a linear model on a churn dataset, project layout, MLflow, FastAPI, Docker). Also: 50 Compiler Theory labs for 600+ students, Distributed Computing quizzes, assisted two 2025/26 graduation projects (social-media trend and emotion analysis; diabetes detection with ML).
 - Native Arabic speaker: mention it for Arabic, MENA or GCC-facing companies.
 - Notice period, expected salary and years of experience haven't been given yet, so leave `[FILL IN]` placeholders.
