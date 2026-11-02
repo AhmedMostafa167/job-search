@@ -17,7 +17,7 @@ FILE_STEM = "Ahmed_Dorra_CV_Henkel_GenAI"
 TITLE = "AI Engineer — Generative AI: LLM Applications & Diffusion Fine-Tuning (PyTorch · Hugging Face)"
 
 SUMMARY = (
-    "AI engineer who builds generative AI end to end in Python. Fine-tuned Stable Diffusion with LoRA on ~12k "
+    "AI engineer who builds generative AI end to end in Python. With a colleague, fine-tuned Stable Diffusion with LoRA on ~12k "
     "captioned images for text-to-floor-plan generation (published 2025), and builds LLM applications: a LangGraph "
     "chatbot agent with RAG, tool calling and structured outputs, served through a FastAPI REST API in Docker with "
     "tests, tracing and monitoring. Designs prompts and judges them with measurements: on a 12,730-product "

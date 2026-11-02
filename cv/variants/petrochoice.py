@@ -35,7 +35,8 @@ _shop, _research, _visioneer = copy.deepcopy(_BASE_PROJECTS)
 _visioneer["tagline"] = "Computer vision: text-to-floor-plan image generation with AR (2024)"
 _visioneer["stack"] = "PyTorch · Stable Diffusion v1.5 · Hugging Face Diffusers · LoRA · Android · ARCore"
 _visioneer["bullets"] = [
-    "Fine-tuned Stable Diffusion v1.5 with LoRA (PyTorch, Hugging Face Diffusers) on ~12k captioned floor-plan "
+    "With a colleague, fine-tuned Stable Diffusion v1.5 with LoRA (PyTorch, Hugging Face Diffusers) on ~12k "
+    "captioned floor-plan "
     "images to generate furnished 2D layouts from text prompts; a teammate trained the companion schematic model, "
     "and both were served to an Android AR app. Published in Machine Graphics & Vision (2025).",
 ]

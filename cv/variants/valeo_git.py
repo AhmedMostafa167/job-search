@@ -18,7 +18,7 @@ SUMMARY = (
     "LangGraph components, user-facing UIs that call the models, and the tests, documentation and monitoring that "
     "keep them running. On a 12,730-product shopping assistant, covered the service with 104 pytest tests and CI, "
     "found and fixed a search bottleneck (35 ms to 3.1 ms median), and raised agent task success from 7 to 12 of "
-    "12 tasks. Fine-tuned Stable Diffusion with LoRA in PyTorch (published 2025); Computer Science teaching assistant."
+    "12 tasks. With a colleague, fine-tuned Stable Diffusion with LoRA in PyTorch (published 2025); Computer Science teaching assistant."
 )
 
 SKILLS = [

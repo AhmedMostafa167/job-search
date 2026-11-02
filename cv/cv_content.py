@@ -77,7 +77,8 @@ PROJECTS = [
                   ("Paper", "https://mgv.sggw.edu.pl/article/view/10294")],
         "stack": "Stable Diffusion v1.5 · Hugging Face Diffusers · LoRA · Android · ARCore",
         "bullets": [
-            "Fine-tuned Stable Diffusion v1.5 with LoRA (Hugging Face Diffusers) on ~12k captioned floor plans to "
+            "With a colleague, fine-tuned Stable Diffusion v1.5 with LoRA (Hugging Face Diffusers) on ~12k captioned floor "
+            "plans to "
             "generate furnished 2D layouts from text prompts; a teammate trained the companion schematic model, "
             "and both were served to an Android AR app. Published in Machine Graphics & Vision (2025).",
         ],
