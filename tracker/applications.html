@@ -310,6 +310,10 @@
     return [...state.rows].sort((a, b) => {
       const ra = a.status === "Ready to send" ? 0 : 1, rb = b.status === "Ready to send" ? 0 : 1;
       if (ra !== rb) return ra - rb;
+      if (ra === 0) {
+        const pa = a.priority || 9999, pb = b.priority || 9999;
+        if (pa !== pb) return pa - pb;
+      }
       return (b.appliedOn || "").localeCompare(a.appliedOn || "") || (a.company || "").localeCompare(b.company || "");
     });
   }
@@ -447,7 +451,7 @@
     const tone = TONE[r.status] || "idle";
 
     const who = h("div", { class: "who" },
-      h("h2", { text: r.company || "Untitled" }),
+      h("h2", { text: (r.status === "Ready to send" && r.priority ? "#" + r.priority + " " : "") + (r.company || "Untitled") }),
       h("p", { class: "role", text: [r.role, r.location].filter(Boolean).join(" · ") }),
       r.source ? h("p", { class: "role", text: (r.status === "Ready to send" ? "Apply by " : "Applied through ") + r.source }) : null,
       r.contact ? h("div", { class: "contact" }, h("span", { text: r.contact }), copyButton(r.contact)) : null);
