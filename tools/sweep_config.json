@@ -119,15 +119,22 @@
   "bad_title": "\\b(phd|professor|postdoc|werkstudent|working student)\\b",
   "junior_override": "\\b(junior|jr|entry[- ]level|graduate|graduates|fresh(er)?|associate|early career|trainee)\\b",
   "ok_places": ".*",
-  "bad_places": "israel|tel aviv|haifa|petah tikva|ramat gan|herzliya|russia|belarus",
-  "bad_companies": "whatjobs|placements24|crossing hurdles|mindrift|toloka|outlier|dataannotation|alignerr",
+  "bad_places": "israel|tel aviv|haifa|petah tikva|ramat gan|herzliya|russia|belarus|india|bangalore|bengaluru|pune\\b|hyderabad|chennai|mumbai|delhi|noida|gurgaon|gurugram|kochi|cochin|kolkata|ahmedabad|vadodara|indore|jaipur|chandigarh|kerala|karnataka|maharashtra|telangana|haryana|uttar pradesh|tamil nadu|pakistan|karachi|lahore|islamabad|bangladesh|dhaka|sri lanka|nigeria|lagos|kenya|nairobi|philippines|manila|indonesia|jakarta|vietnam|\\bin$|, in\\b",
+  "bad_companies": "whatjobs|placements24|crossing hurdles|mindrift|toloka|outlier|dataannotation|alignerr|weekday|hirist|naukri|private limited|pvt\\.? ltd|india",
   "hot_words": "rag|llm|agent|agentic|langgraph|langchain|fastapi|mlops|nlp|arabic|pytorch|genai|generative",
   "europe_needs_junior": "^$",
   "generic_title": "\\b(python|backend|back-end|front-end|frontend|full[- ]?stack|data|analytics|analyst|bi developer|software|developer|devops|sre|qa|test automation|automation|cloud|platform|it support|technical support|(system|systems|network|security|support|solutions?|database|infrastructure|embedded|firmware|robotics|site reliability|integration|application) engineer|programmer)\\b",
   "ai_title": "\\b(ai|a\\.i\\.|ml|llm|genai|nlp|machine learning|data scien\\w*|generative|agentic|agents?|mlops|llmops|deep learning|prompt|applied scientist|research (engineer|scientist)|computer vision)\\b",
-  "bad_urls": "whatjobs|glassdoor",
+  "bad_urls": "naukri\\.|hirist\\.|instahyre\\.|keka\\.com|foundit\\.|shine\\.com|timesjobs|whatjobs|glassdoor|iimjobs|wellfound\\.com/l/india",
   "bad_role": "\\b(physician|nurse|driver|wordpress|accountant|designer|content reviewer|annotation|video creator)\\b",
   "non_english_title": "[Ѐ-ӿ֐-ۿ฀-๿぀-ヿ㐀-鿿가-힯]",
   "core_title": "\\b(ai|a\\.i\\.|ml|llm|genai|nlp|machine learning|data scien\\w*|generative|agentic|agents?|mlops|llmops|deep learning|prompt|applied scientist|research (engineer|scientist)|computer vision)\\b",
-  "require_junior_for_generic": false
+  "require_junior_for_generic": false,
+  "tier_caps": [
+    100,
+    60,
+    60,
+    60
+  ],
+  "max_per_company": 3
 }

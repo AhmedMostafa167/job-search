@@ -208,14 +208,38 @@ def main():
         dup.add(k2)
         kept.append(j)
     new = [j for j in kept if key(j["url"]) not in seen]
-    new.sort(key=lambda j: (-score(j), j["date"]), reverse=False)
     today = dt.date.today().isoformat()
+    EG = re.compile(r"egypt|cairo|giza|alexandria|mansoura|smart village|new cairo|6th of october", re.I)
+    GULF = re.compile(r"saudi|riyadh|jeddah|dammam|dubai|abu dhabi|uae|emirates|sharjah|ajman|qatar|doha|kuwait|bahrain|manama|oman|muscat|jordan|amman|morocco|casablanca|tunisia|lebanon|beirut|iraq|mena|gcc", re.I)
+    REMOTE = re.compile(r"remote|worldwide|anywhere|global|emea|africa|europe", re.I)
+    def tier(j):
+        loc = j["location"]
+        if EG.search(loc): return 0
+        if GULF.search(loc): return 1
+        if REMOTE.search(loc): return 2
+        return 3
+    new.sort(key=lambda j: (-score(j), j["date"]))
+    per_co, per_tier, shown = {}, {0: [], 1: [], 2: [], 3: []}, []
+    caps = CFG.get("tier_caps", [100, 60, 60, 60])
+    for j in new:
+        t = tier(j)
+        co = j["company"].lower()
+        if per_co.get(co, 0) >= CFG.get("max_per_company", 3) or len(per_tier[t]) >= caps[t]:
+            continue
+        per_co[co] = per_co.get(co, 0) + 1
+        per_tier[t].append(j)
+        shown.append(j)
     lines = [f"# Job sweep {today}", "",
-             f"Read {len(allj)} posts ({len(uniq)} unique), {len(kept)} passed the filters, **{len(new)} new** since the last run.", ""]
-    if new:
-        lines += ["| Score | Role | Company | Where | Posted | Flags | Source |", "|---|---|---|---|---|---|---|"]
-        for j in new[:CFG["max_rows"]]:
-            lines.append(f"| {score(j)} | [{j['title'][:70].replace('|', '/')}]({j['url']}) | {j['company'][:30]} | {j['location'][:34]} | {j['date']} | {flags(j)} | {j['src']} |")
+             f"Read {len(allj)} posts ({len(uniq)} unique), {len(kept)} passed the filters, **{len(new)} new**; showing {len(shown)} (at most {CFG.get('max_per_company', 3)} per company).", ""]
+    names = ["Egypt", "Gulf and Arab world", "Remote or worldwide", "Everywhere else (relocation)"]
+    if shown:
+        for t in range(4):
+            if not per_tier[t]:
+                continue
+            lines += [f"## {names[t]} ({len(per_tier[t])})", "", "| Score | Role | Company | Where | Posted | Flags |", "|---|---|---|---|---|---|"]
+            for j in per_tier[t]:
+                lines.append(f"| {score(j)} | [{j['title'][:62].replace('|', '/')}]({j['url']}) | {j['company'][:24].replace('|', '/')} | {j['location'][:26].replace('|', '/')} | {j['date'][5:]} | {flags(j)} |")
+            lines.append("")
     else:
         lines.append("Nothing new today.")
     lines += ["", "Not covered (they block automated reads): Wuzzuf, Bayt, GulfTalent, and company portals (CIB, PwC, Valeo, Orange, Vodafone, Raya, Henkel, Capgemini). Check those by hand.", ""]
@@ -223,7 +247,7 @@ def main():
     (outdir / f"{today}.md").write_text("\n".join(lines))
     print("\n".join(lines[:6]))
     if not a.no_state:
-        seen |= {key(j["url"]) for j in new[:CFG["max_rows"]]}  # only what was shown; the rest stays for tomorrow
+        seen |= {key(j["url"]) for j in shown}  # only what was shown; the rest stays for tomorrow
         seen_path.write_text(json.dumps(sorted(seen)))
     return 0
 
