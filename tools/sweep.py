@@ -116,7 +116,6 @@ def remote_boards():
     return out
 
 
-WANT = re.compile(CFG["want_title"], re.I)
 BAD = re.compile(CFG["bad_title"], re.I)
 JUNIOR_OK = re.compile(CFG["junior_override"], re.I)
 OK_PLACE = re.compile(CFG["ok_places"], re.I)
@@ -128,7 +127,7 @@ BAD_ROLE = re.compile(CFG["bad_role"], re.I)
 NON_EN = re.compile(CFG["non_english_title"], re.I)
 US_STATE = re.compile(r",\s*(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)\b(?!\w)")
 GENERIC = re.compile(CFG["generic_title"], re.I)
-AI = re.compile(CFG["ai_title"], re.I)
+AI = re.compile(CFG.get("core_title") or CFG["ai_title"], re.I)  # the job-title words that define the field
 
 
 def keep(j, cutoff):
@@ -158,7 +157,7 @@ def score(j):
     s += 1 if re.search(r"remote|worldwide|anywhere|emea|africa", j["location"], re.I) else 0
     s += 1 if re.search(r"relocat|visa|sponsor", j["extra"] + j["title"], re.I) else 0
     s += 1 if AI.search(j["title"]) else 0
-    s += len(set(m.lower() for m in HOT.findall(j["title"] + " " + j["extra"]))) 
+    s += len(set(m.lower() for m in HOT.findall(j["title"] + " " + j["extra"])))
     return s
 
 
@@ -179,7 +178,10 @@ def main():
     seen = set(json.loads(seen_path.read_text())) if seen_path.exists() and not a.no_state else set()
 
     allj = []
+    sources = CFG.get("sources", ["freehire", "linkedin", "remote boards"])
     for name, fn in (("freehire", freehire), ("linkedin", linkedin), ("remote boards", remote_boards)):
+        if name not in sources:
+            continue
         got = fn()
         print(f"{name}: {len(got)} posts read")
         allj += got
