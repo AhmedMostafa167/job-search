@@ -123,7 +123,8 @@ OK_PLACE = re.compile(CFG["ok_places"], re.I)
 BAD_PLACE = re.compile(CFG["bad_places"], re.I)
 BAD_COMPANY = re.compile(CFG["bad_companies"], re.I)
 HOT = re.compile(CFG["hot_words"], re.I)
-EUROPE = re.compile(CFG["europe_needs_junior"], re.I)
+GENERIC = re.compile(CFG["generic_title"], re.I)
+AI = re.compile(CFG["ai_title"], re.I)
 
 
 def keep(j, cutoff):
@@ -138,9 +139,9 @@ def keep(j, cutoff):
         return False
     if BAD_PLACE.search(loc):
         return False
-    if EUROPE.search(loc) and not JUNIOR_OK.search(t):
-        return False  # abroad posts only when explicitly junior or graduate level
-    return bool(OK_PLACE.search(loc) or not loc)
+    if GENERIC.search(t) and not AI.search(t) and not JUNIOR_OK.search(t):
+        return False  # generic software/data titles only when junior or graduate level
+    return True
 
 
 def score(j):
@@ -148,6 +149,8 @@ def score(j):
     s += 3 if re.search(r"junior|jr\b|graduate|entry|fresh|associate|trainee|early", j["title"], re.I) else 0
     s += 2 if re.search(r"egypt|cairo|giza|alexandria", j["location"], re.I) else 0
     s += 1 if re.search(r"remote|worldwide|anywhere|emea|africa", j["location"], re.I) else 0
+    s += 1 if re.search(r"relocat|visa|sponsor", j["extra"] + j["title"], re.I) else 0
+    s += 1 if AI.search(j["title"]) else 0
     s += len(set(m.lower() for m in HOT.findall(j["title"] + " " + j["extra"]))) 
     return s
 
