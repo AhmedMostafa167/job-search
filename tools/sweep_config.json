@@ -1,16 +1,129 @@
 {
   "days": 3,
   "pages": 3,
-  "max_rows": 60,
-  "queries": ["AI engineer", "LLM", "machine learning engineer", "generative AI", "junior data scientist", "NLP", "agentic", "MLOps"],
-  "freehire_scopes": [{"countries": "eg"}, {"regions": "mena"}, {"regions": "global", "seniority": "junior"}, {"regions": "eu,uk", "seniority": "junior"}, {"regions": "africa"}],
-  "linkedin_queries": ["AI engineer", "machine learning engineer", "LLM engineer", "junior data scientist", "generative AI"],
-  "linkedin_locations": ["Egypt", "Saudi Arabia", "United Arab Emirates", "Qatar", "Kuwait", "Bahrain", "Jordan", "Remote", "Germany", "Netherlands", "Ireland", "Spain", "Portugal", "Singapore"],
-  "want_title": "\\b(ai|a\\.i\\.|ml|llm|genai|nlp|machine learning|data scien|generative|agentic|agents?|mlops|deep learning|prompt|applied scientist|python)\\b",
-  "bad_title": "\\b(senior|sr\\.?|lead|principal|staff|head|director|manager|architect|vp|phd|trainer|tutor|physician|sales|marketing|recruiter|werkstudent|working student)\\b",
+  "max_rows": 150,
+  "queries": [
+    "AI engineer",
+    "LLM",
+    "machine learning engineer",
+    "generative AI",
+    "data scientist",
+    "NLP",
+    "agentic",
+    "MLOps",
+    "applied scientist",
+    "research engineer",
+    "python developer",
+    "backend engineer",
+    "data engineer",
+    "software engineer AI",
+    "computer vision",
+    "deep learning",
+    "prompt engineer",
+    "AI developer",
+    "junior software engineer",
+    "analytics"
+  ],
+  "freehire_scopes": [
+    {
+      "countries": "eg"
+    },
+    {
+      "regions": "mena"
+    },
+    {
+      "regions": "global"
+    },
+    {
+      "regions": "eu"
+    },
+    {
+      "regions": "uk"
+    },
+    {
+      "regions": "apac"
+    },
+    {
+      "regions": "africa"
+    },
+    {
+      "regions": "eu",
+      "seniority": "junior"
+    },
+    {
+      "regions": "uk",
+      "seniority": "junior"
+    },
+    {
+      "regions": "mena",
+      "seniority": "junior"
+    },
+    {
+      "regions": "apac",
+      "seniority": "junior"
+    }
+  ],
+  "linkedin_queries": [
+    "AI engineer",
+    "machine learning engineer",
+    "LLM engineer",
+    "data scientist",
+    "generative AI",
+    "python developer",
+    "junior software engineer",
+    "NLP engineer"
+  ],
+  "linkedin_locations": [
+    "Egypt",
+    "Saudi Arabia",
+    "United Arab Emirates",
+    "Qatar",
+    "Kuwait",
+    "Bahrain",
+    "Oman",
+    "Jordan",
+    "Morocco",
+    "Turkey",
+    "Remote",
+    "Germany",
+    "Netherlands",
+    "Ireland",
+    "Spain",
+    "Portugal",
+    "France",
+    "Italy",
+    "Switzerland",
+    "Austria",
+    "Belgium",
+    "Luxembourg",
+    "Sweden",
+    "Denmark",
+    "Norway",
+    "Finland",
+    "Poland",
+    "Czechia",
+    "Romania",
+    "Greece",
+    "Cyprus",
+    "United Kingdom",
+    "Singapore",
+    "Malaysia",
+    "Hong Kong",
+    "Japan",
+    "South Korea",
+    "Canada",
+    "Australia",
+    "New Zealand"
+  ],
+  "want_title": "\\b(ai|a\\.i\\.|ml|llm|genai|nlp|machine learning|data scien\\w*|generative|agentic|agents?|mlops|llmops|deep learning|prompt|applied scientist|research (engineer|scientist)|computer vision|data analy\\w*|analytics engineer|bi developer|python|backend|back-end|data engineer|software (engineer|developer)|developer)\\b",
+  "bad_title": "\\b(senior|sr\\.?|lead|principal|staff|head|director|manager|architect|vp|phd|trainer|tutor|physician|sales|marketing|recruiter|werkstudent|working student|content reviewer|annotation|video creator|operator|professor|postdoc)\\b",
   "junior_override": "junior|jr\\b|entry|graduate|fresh|associate|early career",
-  "ok_places": "egypt|cairo|giza|alexandria|saudi|riyadh|jeddah|dubai|abu dhabi|uae|emirates|qatar|doha|kuwait|bahrain|manama|oman|muscat|jordan|amman|morocco|remote|worldwide|anywhere|emea|africa|mena|germany|berlin|munich|frankfurt|netherlands|amsterdam|ireland|dublin|spain|madrid|barcelona|portugal|lisbon|porto|singapore|poland|warsaw|europe|global",
-  "bad_places": "united states|usa|canada|israel|tel aviv|south africa|india only|u\\.s\\.|us only|north america|latam|brazil|australia|new zealand|japan|korea|china|\\bus\\b",
+  "ok_places": ".*",
+  "bad_places": "united states|usa|\\bu\\.s\\.|us only|\\bus\\b|north america|latam|latin america|brazil|mexico|argentina|colombia|israel|tel aviv|india only|russia|belarus|india|bangalore|bengaluru|pune|hyderabad|chennai|mumbai|delhi|noida|gurgaon|gurugram|kochi|cochin|kolkata|ahmedabad|kerala|karnataka|maharashtra|pakistan|karachi|lahore|islamabad|bangladesh|dhaka|sri lanka|nigeria|kenya|philippines|indonesia|vietnam",
   "bad_companies": "whatjobs|placements24|crossing hurdles|mindrift|toloka|outlier|dataannotation|alignerr",
-  "hot_words": "rag|llm|agent|agentic|langgraph|langchain|fastapi|mlops|nlp|arabic|pytorch|genai|generative"
+  "hot_words": "rag|llm|agent|agentic|langgraph|langchain|fastapi|mlops|nlp|arabic|pytorch|genai|generative",
+  "europe_needs_junior": "^$",
+  "generic_title": "\\b(python|backend|back-end|data engineer|data analy\\w*|analytics engineer|bi developer|software (engineer|developer)|developer)\\b",
+  "ai_title": "\\b(ai|a\\.i\\.|ml|llm|genai|nlp|machine learning|data scien\\w*|generative|agentic|agents?|mlops|llmops|deep learning|prompt|applied scientist|research (engineer|scientist)|computer vision)\\b",
+  "bad_urls": "naukri\\.|hirist\\.|instahyre\\.|keka\\.com|foundit\\.|shine\\.com|timesjobs|whatjobs|glassdoor"
 }

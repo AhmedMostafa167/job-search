@@ -123,6 +123,9 @@ OK_PLACE = re.compile(CFG["ok_places"], re.I)
 BAD_PLACE = re.compile(CFG["bad_places"], re.I)
 BAD_COMPANY = re.compile(CFG["bad_companies"], re.I)
 HOT = re.compile(CFG["hot_words"], re.I)
+BAD_URL = re.compile(CFG["bad_urls"], re.I)
+GENERIC = re.compile(CFG["generic_title"], re.I)
+AI = re.compile(CFG["ai_title"], re.I)
 
 
 def keep(j, cutoff):
@@ -133,18 +136,23 @@ def keep(j, cutoff):
         return False
     if j["date"] and j["date"] < cutoff:
         return False
-    if BAD_COMPANY.search(j["company"]) or "whatjobs" in j["url"]:
+    if BAD_COMPANY.search(j["company"]) or BAD_URL.search(j["url"]):
         return False
     if BAD_PLACE.search(loc):
         return False
-    return bool(OK_PLACE.search(loc) or not loc)
+    if GENERIC.search(t) and not AI.search(t) and not JUNIOR_OK.search(t):
+        return False  # generic software/data titles only when junior or graduate level
+    return True
 
 
 def score(j):
     s = 0
     s += 3 if re.search(r"junior|jr\b|graduate|entry|fresh|associate|trainee|early", j["title"], re.I) else 0
     s += 2 if re.search(r"egypt|cairo|giza|alexandria", j["location"], re.I) else 0
+    s += 2 if re.search(r"saudi|riyadh|jeddah|dubai|abu dhabi|uae|emirates|qatar|doha|kuwait|bahrain|oman|jordan|amman", j["location"], re.I) else 0
     s += 1 if re.search(r"remote|worldwide|anywhere|emea|africa", j["location"], re.I) else 0
+    s += 1 if re.search(r"relocat|visa|sponsor", j["extra"] + j["title"], re.I) else 0
+    s += 1 if AI.search(j["title"]) else 0
     s += len(set(m.lower() for m in HOT.findall(j["title"] + " " + j["extra"]))) 
     return s
 
@@ -198,7 +206,7 @@ def main():
     (outdir / f"{today}.md").write_text("\n".join(lines))
     print("\n".join(lines[:6]))
     if not a.no_state:
-        seen |= {key(j["url"]) for j in kept}
+        seen |= {key(j["url"]) for j in new[:CFG["max_rows"]]}  # only what was shown; the rest stays for tomorrow
         seen_path.write_text(json.dumps(sorted(seen)))
     return 0
 
