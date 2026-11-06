@@ -123,6 +123,7 @@ OK_PLACE = re.compile(CFG["ok_places"], re.I)
 BAD_PLACE = re.compile(CFG["bad_places"], re.I)
 BAD_COMPANY = re.compile(CFG["bad_companies"], re.I)
 HOT = re.compile(CFG["hot_words"], re.I)
+BAD_URL = re.compile(CFG["bad_urls"], re.I)
 GENERIC = re.compile(CFG["generic_title"], re.I)
 AI = re.compile(CFG["ai_title"], re.I)
 
@@ -135,7 +136,7 @@ def keep(j, cutoff):
         return False
     if j["date"] and j["date"] < cutoff:
         return False
-    if BAD_COMPANY.search(j["company"]) or "whatjobs" in j["url"]:
+    if BAD_COMPANY.search(j["company"]) or BAD_URL.search(j["url"]):
         return False
     if BAD_PLACE.search(loc):
         return False
@@ -204,7 +205,7 @@ def main():
     (outdir / f"{today}.md").write_text("\n".join(lines))
     print("\n".join(lines[:6]))
     if not a.no_state:
-        seen |= {key(j["url"]) for j in kept}
+        seen |= {key(j["url"]) for j in new[:CFG["max_rows"]]}  # only what was shown; the rest stays for tomorrow
         seen_path.write_text(json.dumps(sorted(seen)))
     return 0
 
