@@ -149,6 +149,7 @@ def score(j):
     s = 0
     s += 3 if re.search(r"junior|jr\b|graduate|entry|fresh|associate|trainee|early", j["title"], re.I) else 0
     s += 2 if re.search(r"egypt|cairo|giza|alexandria", j["location"], re.I) else 0
+    s += 2 if re.search(r"saudi|riyadh|jeddah|dubai|abu dhabi|uae|emirates|qatar|doha|kuwait|bahrain|oman|jordan|amman", j["location"], re.I) else 0
     s += 1 if re.search(r"remote|worldwide|anywhere|emea|africa", j["location"], re.I) else 0
     s += 1 if re.search(r"relocat|visa|sponsor", j["extra"] + j["title"], re.I) else 0
     s += 1 if AI.search(j["title"]) else 0
