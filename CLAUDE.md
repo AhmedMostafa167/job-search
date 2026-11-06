@@ -54,7 +54,8 @@ Only use claims verified against his repositories or confirmed by him.
   - speech (STT / TTS)
   - OCR
   - vector-based memory: the Shopping Assistant's long-term memory is typed facts in PostgreSQL, plus a LangGraph Postgres checkpointer for conversation state
-- **Not his work, so keep them off the CV until he rebuilds them:** Dialogue Summarization (QLoRA) and the Banking Intent Classifier. Their replacements are planned in `plans/` (Project 1: Arabic banking intents; Project 2: the Egyptian support-ticket model). Add them to the CV only with their measured results, once finished.
+- **Arabic Banking Intent Classifier** (repo `arabic_banking_intent`, finished Nov 2026) is added to every CV at build time by `cv/arabic_intent_project.py` (full entry on ML/NLP-titled CVs, one bullet elsewhere; VISIONEER is dropped from CV projects but stays on the portfolio and as a paper). Numbers are from that repo's README; don't mention the laptop-CPU remark.
+- **Not his work, so keep them off the CV:** Dialogue Summarization (QLoRA) and the old Banking Intent Classifier. Their replacements are planned in `plans/` (Project 1: Arabic banking intents; Project 2: the Egyptian support-ticket model). Add them to the CV only with their measured results, once finished.
 - **Research Assistant:** he designed the agent, and Claude built most of the rest. Describe the design; don't overstate the implementation.
 - **VISIONEER (2024):** he and a colleague did the LoRA fine-tuning; the teammate trained the schematic model.
 - **Shopping Assistant numbers**, verified in that repo's `README.md`, `docs/evaluation.md` and `eval/IMPROVEMENT_LOG.md`:

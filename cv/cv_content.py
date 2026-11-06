@@ -171,9 +171,7 @@ TRAINING = [
     "Mini-RAG: production RAG systems — Abu Bakr Soliman (2026)",
     "Hugging Face LLM Course (in progress)",
     "Generative AI with Large Language Models — DeepLearning.AI",
-    "Natural Language Processing Specialization — DeepLearning.AI",
-    "Deep Learning Specialization — DeepLearning.AI",
-    "Machine Learning Specialization — DeepLearning.AI & Stanford",
+    "Natural Language Processing, Deep Learning and Machine Learning Specializations — DeepLearning.AI (and Stanford)",
     "Applied Text Mining in Python — University of Michigan",
     "Vector Databases (Pinecone) — 365 Data Science",
 ]
