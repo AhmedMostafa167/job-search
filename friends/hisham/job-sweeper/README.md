@@ -6,6 +6,13 @@ Free, no coding, no API keys. Works for any field: change the titles in one file
 
 ## Set it up (10 minutes, on a computer)
 
+**Got this as a ZIP file (from Google Drive)?** Do this first instead of step 2 below: unzip it, create a new **private**
+repository on github.com (click **+** → **New repository**, name it `job-sweeper`, tick nothing else), click **uploading an
+existing file**, drag in everything from the unzipped folder (including the hidden `.github` folder: on Windows turn on
+"Hidden items" in File Explorer, on Mac press Cmd+Shift+. in Finder), and click **Commit changes**. Check that
+`.github/workflows/daily-sweep.yml` shows in the repo, then continue from step 3.
+
+
 1. Create a free account at github.com if you don't have one.
 2. On this page, click **Use this template → Create a new repository**. Name it `job-sweeper`, choose **Private**, and create it.
 3. In your new repo open **Settings → Actions → General**, and under "Workflow permissions" choose **Read and write permissions**. Save.
