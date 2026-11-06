@@ -134,11 +134,9 @@ def keep(j, cutoff):
     t, loc = j["title"], j["location"]
     if not t:
         return False
-    if not AI.search(t) and not (GENERIC.search(t) and JUNIOR_OK.search(t)):
-        return False  # AI/ML/data-science titles at any non-senior level; generic ones only when junior or graduate
-    if BAD.search(t) or BAD_ROLE.search(t) or NON_EN.search(t):
+    if not AI.search(t) and not (GENERIC.search(t) and (JUNIOR_OK.search(t) or not CFG.get("require_junior_for_generic", True))):
         return False
-    if US_STATE.search(loc) or "united states" in loc.lower():
+    if BAD.search(t) or BAD_ROLE.search(t) or NON_EN.search(t):
         return False
     if j["date"] and j["date"] < cutoff:
         return False
@@ -149,8 +147,20 @@ def keep(j, cutoff):
     return True
 
 
+def flags(j):
+    f = []
+    if re.search(r"senior|sr\.?|snr|lead|principal|staff|head|manager|director|architect", j["title"], re.I):
+        f.append("senior")
+    if US_STATE.search(j["location"]) or "united states" in j["location"].lower():
+        f.append("US")
+    if re.search(r"intern|trainee", j["title"], re.I):
+        f.append("intern")
+    return ", ".join(f)
+
+
 def score(j):
     s = 0
+    s -= 2 if re.search(r"senior|sr\.?|snr|principal|staff|head|director|architect|manager", j["title"], re.I) else 0
     s += 3 if re.search(r"junior|jr\b|graduate|entry|fresh|associate|trainee|early", j["title"], re.I) else 0
     s += 2 if re.search(r"egypt|cairo|giza|alexandria", j["location"], re.I) else 0
     s += 2 if re.search(r"saudi|riyadh|jeddah|dubai|abu dhabi|uae|emirates|qatar|doha|kuwait|bahrain|oman|jordan|amman", j["location"], re.I) else 0
@@ -203,9 +213,9 @@ def main():
     lines = [f"# Job sweep {today}", "",
              f"Read {len(allj)} posts ({len(uniq)} unique), {len(kept)} passed the filters, **{len(new)} new** since the last run.", ""]
     if new:
-        lines += ["| Score | Role | Company | Where | Posted | Source |", "|---|---|---|---|---|---|"]
+        lines += ["| Score | Role | Company | Where | Posted | Flags | Source |", "|---|---|---|---|---|---|---|"]
         for j in new[:CFG["max_rows"]]:
-            lines.append(f"| {score(j)} | [{j['title'][:70].replace('|', '/')}]({j['url']}) | {j['company'][:30]} | {j['location'][:34]} | {j['date']} | {j['src']} |")
+            lines.append(f"| {score(j)} | [{j['title'][:70].replace('|', '/')}]({j['url']}) | {j['company'][:30]} | {j['location'][:34]} | {j['date']} | {flags(j)} | {j['src']} |")
     else:
         lines.append("Nothing new today.")
     lines += ["", "Not covered (they block automated reads): Wuzzuf, Bayt, GulfTalent, and company portals (CIB, PwC, Valeo, Orange, Vodafone, Raya, Henkel, Capgemini). Check those by hand.", ""]
