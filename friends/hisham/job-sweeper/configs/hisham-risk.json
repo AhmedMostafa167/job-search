@@ -1,0 +1,89 @@
+{
+  "days": 7,
+  "pages": 3,
+  "max_rows": 150,
+  "queries": [],
+  "freehire_scopes": [
+    {
+      "countries": "eg"
+    },
+    {
+      "regions": "mena"
+    },
+    {
+      "regions": "global"
+    },
+    {
+      "regions": "eu"
+    },
+    {
+      "regions": "uk"
+    },
+    {
+      "regions": "apac"
+    },
+    {
+      "regions": "africa"
+    },
+    {
+      "regions": "eu",
+      "seniority": "junior"
+    },
+    {
+      "regions": "uk",
+      "seniority": "junior"
+    },
+    {
+      "regions": "mena",
+      "seniority": "junior"
+    },
+    {
+      "regions": "apac",
+      "seniority": "junior"
+    }
+  ],
+  "linkedin_queries": [
+    "risk analyst",
+    "operational risk",
+    "enterprise risk management",
+    "fraud risk",
+    "credit risk analyst",
+    "compliance analyst",
+    "AML analyst",
+    "internal audit",
+    "GRC analyst",
+    "risk management specialist"
+  ],
+  "linkedin_locations": [
+    "Egypt",
+    "Saudi Arabia",
+    "United Arab Emirates",
+    "Qatar",
+    "Kuwait",
+    "Bahrain",
+    "Oman",
+    "Jordan",
+    "Morocco",
+    "Remote",
+    "United Kingdom",
+    "Ireland",
+    "Germany",
+    "Netherlands",
+    "Singapore",
+    "Canada"
+  ],
+  "bad_title": "\\b(director|vp|vice president|head of|chief|principal|phd|professor|intern|internship|trainee)\\b",
+  "junior_override": "\\b(junior|jr|entry[- ]level|graduate|graduates|fresh(er)?|associate|early career|trainee)\\b",
+  "ok_places": ".*",
+  "bad_places": "united states|usa|\\bu\\.s\\.|us only|\\bus\\b|north america|latam|latin america|brazil|mexico|argentina|colombia|israel|tel aviv|india only|russia|belarus|india|bangalore|bengaluru|pune|hyderabad|chennai|mumbai|delhi|noida|gurgaon|gurugram|kochi|cochin|kolkata|ahmedabad|kerala|karnataka|maharashtra|pakistan|karachi|lahore|islamabad|bangladesh|dhaka|sri lanka|nigeria|kenya|philippines|indonesia|vietnam|haifa|petah tikva|ramat gan|herzliya|fairfax|nationals? only|emirati|saudi nationals|uae nationals",
+  "bad_companies": "whatjobs|placements24|crossing hurdles|mindrift|toloka|outlier|dataannotation|alignerr",
+  "hot_words": "risk|operational|enterprise|fraud|compliance|erm|grc|telecom|fintech|bank|dashboard",
+  "generic_title": "(?!x)x",
+  "bad_urls": "naukri\\.|hirist\\.|instahyre\\.|keka\\.com|foundit\\.|shine\\.com|timesjobs|whatjobs|glassdoor",
+  "bad_role": "\\b(sales|marketing|recruiter|tutor|physician|wordpress|designer|driver|nurse|pharmacist|insurance agent|relationship manager)\\b",
+  "non_english_title": "[Ѐ-ӿ֐-ۿ฀-๿぀-ヿ㐀-鿿가-힯]|\\b(développeur|ingénieur|ingenieur|ingeniør|ingenjör|entwickler|sviluppatore|desarrollador|programista|inżynier|werkstudent|stage|stagiaire|traineeship|alternance)\\b",
+  "sources": [
+    "linkedin"
+  ],
+  "core_title": "\\b(risk|fraud|compliance|aml|kyc|grc|internal audit|audit|controls?|credit analyst|governance)\\b"
+}

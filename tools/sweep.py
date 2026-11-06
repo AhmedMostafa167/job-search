@@ -116,7 +116,6 @@ def remote_boards():
     return out
 
 
-WANT = re.compile(CFG["want_title"], re.I)
 BAD = re.compile(CFG["bad_title"], re.I)
 JUNIOR_OK = re.compile(CFG["junior_override"], re.I)
 OK_PLACE = re.compile(CFG["ok_places"], re.I)
@@ -124,15 +123,20 @@ BAD_PLACE = re.compile(CFG["bad_places"], re.I)
 BAD_COMPANY = re.compile(CFG["bad_companies"], re.I)
 HOT = re.compile(CFG["hot_words"], re.I)
 BAD_URL = re.compile(CFG["bad_urls"], re.I)
+BAD_ROLE = re.compile(CFG["bad_role"], re.I)
+NON_EN = re.compile(CFG["non_english_title"], re.I)
+US_STATE = re.compile(r",\s*(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)\b(?!\w)")
 GENERIC = re.compile(CFG["generic_title"], re.I)
-AI = re.compile(CFG["ai_title"], re.I)
+AI = re.compile(CFG.get("core_title") or CFG["ai_title"], re.I)  # the job-title words that define the field
 
 
 def keep(j, cutoff):
     t, loc = j["title"], j["location"]
-    if not t or not WANT.search(t):
+    if not t:
         return False
-    if BAD.search(t) and not JUNIOR_OK.search(t):
+    if not AI.search(t) and not (GENERIC.search(t) and (JUNIOR_OK.search(t) or not CFG.get("require_junior_for_generic", True))):
+        return False
+    if BAD.search(t) or BAD_ROLE.search(t) or NON_EN.search(t):
         return False
     if j["date"] and j["date"] < cutoff:
         return False
@@ -140,20 +144,30 @@ def keep(j, cutoff):
         return False
     if BAD_PLACE.search(loc):
         return False
-    if GENERIC.search(t) and not AI.search(t) and not JUNIOR_OK.search(t):
-        return False  # generic software/data titles only when junior or graduate level
     return True
+
+
+def flags(j):
+    f = []
+    if re.search(r"senior|sr\.?|snr|lead|principal|staff|head|manager|director|architect", j["title"], re.I):
+        f.append("senior")
+    if US_STATE.search(j["location"]) or "united states" in j["location"].lower():
+        f.append("US")
+    if re.search(r"intern|trainee", j["title"], re.I):
+        f.append("intern")
+    return ", ".join(f)
 
 
 def score(j):
     s = 0
+    s -= 2 if re.search(r"senior|sr\.?|snr|principal|staff|head|director|architect|manager", j["title"], re.I) else 0
     s += 3 if re.search(r"junior|jr\b|graduate|entry|fresh|associate|trainee|early", j["title"], re.I) else 0
     s += 2 if re.search(r"egypt|cairo|giza|alexandria", j["location"], re.I) else 0
     s += 2 if re.search(r"saudi|riyadh|jeddah|dubai|abu dhabi|uae|emirates|qatar|doha|kuwait|bahrain|oman|jordan|amman", j["location"], re.I) else 0
     s += 1 if re.search(r"remote|worldwide|anywhere|emea|africa", j["location"], re.I) else 0
     s += 1 if re.search(r"relocat|visa|sponsor", j["extra"] + j["title"], re.I) else 0
     s += 1 if AI.search(j["title"]) else 0
-    s += len(set(m.lower() for m in HOT.findall(j["title"] + " " + j["extra"]))) 
+    s += len(set(m.lower() for m in HOT.findall(j["title"] + " " + j["extra"])))
     return s
 
 
@@ -174,7 +188,10 @@ def main():
     seen = set(json.loads(seen_path.read_text())) if seen_path.exists() and not a.no_state else set()
 
     allj = []
+    sources = CFG.get("sources", ["freehire", "linkedin", "remote boards"])
     for name, fn in (("freehire", freehire), ("linkedin", linkedin), ("remote boards", remote_boards)):
+        if name not in sources:
+            continue
         got = fn()
         print(f"{name}: {len(got)} posts read")
         allj += got
@@ -196,9 +213,9 @@ def main():
     lines = [f"# Job sweep {today}", "",
              f"Read {len(allj)} posts ({len(uniq)} unique), {len(kept)} passed the filters, **{len(new)} new** since the last run.", ""]
     if new:
-        lines += ["| Score | Role | Company | Where | Posted | Source |", "|---|---|---|---|---|---|"]
+        lines += ["| Score | Role | Company | Where | Posted | Flags | Source |", "|---|---|---|---|---|---|---|"]
         for j in new[:CFG["max_rows"]]:
-            lines.append(f"| {score(j)} | [{j['title'][:70].replace('|', '/')}]({j['url']}) | {j['company'][:30]} | {j['location'][:34]} | {j['date']} | {j['src']} |")
+            lines.append(f"| {score(j)} | [{j['title'][:70].replace('|', '/')}]({j['url']}) | {j['company'][:30]} | {j['location'][:34]} | {j['date']} | {flags(j)} | {j['src']} |")
     else:
         lines.append("Nothing new today.")
     lines += ["", "Not covered (they block automated reads): Wuzzuf, Bayt, GulfTalent, and company portals (CIB, PwC, Valeo, Orange, Vodafone, Raya, Henkel, Capgemini). Check those by hand.", ""]
