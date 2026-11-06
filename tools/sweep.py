@@ -123,6 +123,7 @@ OK_PLACE = re.compile(CFG["ok_places"], re.I)
 BAD_PLACE = re.compile(CFG["bad_places"], re.I)
 BAD_COMPANY = re.compile(CFG["bad_companies"], re.I)
 HOT = re.compile(CFG["hot_words"], re.I)
+EUROPE = re.compile(CFG["europe_needs_junior"], re.I)
 
 
 def keep(j, cutoff):
@@ -137,6 +138,8 @@ def keep(j, cutoff):
         return False
     if BAD_PLACE.search(loc):
         return False
+    if EUROPE.search(loc) and not JUNIOR_OK.search(t):
+        return False  # abroad posts only when explicitly junior or graduate level
     return bool(OK_PLACE.search(loc) or not loc)
 
 

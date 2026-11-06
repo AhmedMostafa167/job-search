@@ -2,15 +2,64 @@
   "days": 3,
   "pages": 3,
   "max_rows": 60,
-  "queries": ["AI engineer", "LLM", "machine learning engineer", "generative AI", "junior data scientist", "NLP", "agentic", "MLOps"],
-  "freehire_scopes": [{"countries": "eg"}, {"regions": "mena"}, {"regions": "global", "seniority": "junior"}, {"regions": "eu,uk", "seniority": "junior"}, {"regions": "africa"}],
-  "linkedin_queries": ["AI engineer", "machine learning engineer", "LLM engineer", "junior data scientist", "generative AI"],
-  "linkedin_locations": ["Egypt", "Saudi Arabia", "United Arab Emirates", "Qatar", "Kuwait", "Bahrain", "Jordan", "Remote", "Germany", "Netherlands", "Ireland", "Spain", "Portugal", "Singapore"],
+  "queries": [
+    "AI engineer",
+    "LLM",
+    "machine learning engineer",
+    "generative AI",
+    "junior data scientist",
+    "NLP",
+    "agentic",
+    "MLOps"
+  ],
+  "freehire_scopes": [
+    {
+      "countries": "eg"
+    },
+    {
+      "regions": "mena"
+    },
+    {
+      "regions": "global",
+      "seniority": "junior"
+    },
+    {
+      "regions": "eu,uk",
+      "seniority": "junior"
+    },
+    {
+      "regions": "africa"
+    }
+  ],
+  "linkedin_queries": [
+    "AI engineer",
+    "machine learning engineer",
+    "LLM engineer",
+    "junior data scientist",
+    "generative AI"
+  ],
+  "linkedin_locations": [
+    "Egypt",
+    "Saudi Arabia",
+    "United Arab Emirates",
+    "Qatar",
+    "Kuwait",
+    "Bahrain",
+    "Jordan",
+    "Remote",
+    "Germany",
+    "Netherlands",
+    "Ireland",
+    "Spain",
+    "Portugal",
+    "Singapore"
+  ],
   "want_title": "\\b(ai|a\\.i\\.|ml|llm|genai|nlp|machine learning|data scien|generative|agentic|agents?|mlops|deep learning|prompt|applied scientist|python)\\b",
-  "bad_title": "\\b(senior|sr\\.?|lead|principal|staff|head|director|manager|architect|vp|phd|trainer|tutor|physician|sales|marketing|recruiter|werkstudent|working student)\\b",
+  "bad_title": "\\b(senior|sr\\.?|lead|principal|staff|head|director|manager|architect|vp|phd|trainer|tutor|physician|sales|marketing|recruiter|werkstudent|working student|intern(ship)?|content reviewer|annotation|video creator|operator)\\b",
   "junior_override": "junior|jr\\b|entry|graduate|fresh|associate|early career",
   "ok_places": "egypt|cairo|giza|alexandria|saudi|riyadh|jeddah|dubai|abu dhabi|uae|emirates|qatar|doha|kuwait|bahrain|manama|oman|muscat|jordan|amman|morocco|remote|worldwide|anywhere|emea|africa|mena|germany|berlin|munich|frankfurt|netherlands|amsterdam|ireland|dublin|spain|madrid|barcelona|portugal|lisbon|porto|singapore|poland|warsaw|europe|global",
   "bad_places": "united states|usa|canada|israel|tel aviv|south africa|india only|u\\.s\\.|us only|north america|latam|brazil|australia|new zealand|japan|korea|china|\\bus\\b",
   "bad_companies": "whatjobs|placements24|crossing hurdles|mindrift|toloka|outlier|dataannotation|alignerr",
-  "hot_words": "rag|llm|agent|agentic|langgraph|langchain|fastapi|mlops|nlp|arabic|pytorch|genai|generative"
+  "hot_words": "rag|llm|agent|agentic|langgraph|langchain|fastapi|mlops|nlp|arabic|pytorch|genai|generative",
+  "europe_needs_junior": "germany|berlin|munich|frankfurt|cologne|netherlands|amsterdam|utrecht|rotterdam|ireland|dublin|spain|madrid|barcelona|portugal|lisbon|lisboa|porto|braga|poland|warsaw|romania|singapore|europe"
 }
