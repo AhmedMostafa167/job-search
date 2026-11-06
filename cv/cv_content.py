@@ -59,7 +59,7 @@ PROJECTS = [
         "tagline": "Agentic RAG over arXiv and the web",
         "links": [
             ("Live demo", "https://huggingface.co/spaces/Ahmed167/research_assistant"),
-            ("GitHub", "https://github.com/AhmedMostafa167/Projects/tree/main/01-LLM-RAG/research-assistant"),
+            ("GitHub", "https://github.com/AhmedMostafa167/research-assistant"),
         ],
         "stack": "Python · LangGraph · LangChain · Chroma · BM25 · FastAPI · Gradio · Docker · Hugging Face Spaces",
         "bullets": [
