@@ -60,13 +60,38 @@
     display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
     background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
   }
-  .stage { padding: 10px 14px; display: grid; gap: 1px; border-right: 1px solid var(--line); }
+  .stage {
+    padding: 10px 14px; display: grid; gap: 1px; border: 0; border-right: 1px solid var(--line);
+    background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer;
+  }
+  .stage:hover { background: var(--bg); }
+  .stage[aria-pressed="true"] { background: var(--accent-soft); box-shadow: inset 0 -3px 0 var(--accent); }
   .stage:last-child { border-right: 0; }
   .stage .n { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--muted); }
   .stage.has .n { color: var(--fg); }
   .stage.has[data-tone="warn"] .n { color: var(--warn); }
   .stage.has[data-tone="ok"] .n { color: var(--ok); }
   .stage .l { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+  .toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; align-items: center; }
+  .search { position: relative; min-width: 0; }
+  .search input {
+    width: 100%; box-sizing: border-box; font: inherit; font-size: 1rem; padding: 10px 36px 10px 12px;
+    border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--fg);
+  }
+  .search input::placeholder { color: var(--muted); }
+  .search .clear {
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+    font: inherit; font-size: 1.1rem; line-height: 1; padding: 4px 8px; border: 0; border-radius: 6px;
+    background: transparent; color: var(--muted); cursor: pointer;
+  }
+  .search .clear:hover { color: var(--fg); background: var(--bg); }
+  .filter-status {
+    font: inherit; font-size: 0.92rem; padding: 9px 10px; border-radius: 9px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--fg);
+  }
+  .showing { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+  .showing button { font: inherit; font-size: 0.85rem; background: none; border: 0; padding: 0 2px; color: var(--accent); cursor: pointer; text-decoration: underline; }
 
   .banner { background: var(--warn-soft); color: var(--warn); border-radius: 8px; padding: 10px 14px; font-weight: 500; }
 
@@ -110,6 +135,15 @@
     border: 1px solid var(--line); background: var(--bg); color: var(--fg); white-space: nowrap;
   }
   .file:hover { border-color: var(--accent); color: var(--accent); }
+  button.file { font: inherit; font-size: 0.82rem; line-height: inherit; cursor: pointer; }
+  button.file:disabled { opacity: 0.55; cursor: progress; }
+
+  .pack { grid-column: 1 / -1; display: grid; gap: 6px; }
+  .pack-text {
+    margin: 0; max-height: 60vh; overflow: auto; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 0.88rem; line-height: 1.5;
+    white-space: pre-wrap; overflow-wrap: anywhere; user-select: text;
+  }
 
   .notes { grid-column: 1 / -1; border-top: 1px dashed var(--line); padding-top: 8px; display: grid; gap: 6px; }
   .notes p { margin: 0; color: var(--muted); font-size: 0.9rem; white-space: pre-wrap; }
@@ -155,6 +189,7 @@
     .stage:nth-child(3) { border-right: 0; }
     .stage:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
     form.grid { grid-template-columns: minmax(0, 1fr); }
+    .toolbar { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
 
@@ -169,7 +204,16 @@
     </div>
   </header>
 
-  <section class="pipeline" id="pipeline" aria-label="Applications by stage"></section>
+  <section class="pipeline" id="pipeline" aria-label="Filter applications by stage"></section>
+  <div class="toolbar" id="toolbar" hidden>
+    <div class="search">
+      <input id="q" type="search" autocomplete="off" spellcheck="false"
+        placeholder="Search company, role, CV name, location or notes" aria-label="Search applications">
+      <button class="clear" id="q-clear" type="button" aria-label="Clear search" hidden>×</button>
+    </div>
+    <select class="filter-status" id="filter-status" aria-label="Show applications with status"></select>
+    <p class="showing" id="showing"></p>
+  </div>
   <div class="banner" id="banner" role="status" hidden></div>
   <section class="list" id="list" aria-live="polite"></section>
 
@@ -186,6 +230,7 @@
       <div class="field"><label for="f-posted">Posted on</label><input id="f-posted" type="date"></div>
       <div class="field"><label for="f-applied">Applied on</label><input id="f-applied" type="date"></div>
       <div class="field wide" id="cv-field"><label for="f-cv">CV sent (PDF)</label><input id="f-cv" type="file" accept=".pdf,application/pdf"></div>
+      <div class="field wide" id="letter-field"><label for="f-letter">Cover letter sent (PDF, optional)</label><input id="f-letter" type="file" accept=".pdf,application/pdf"></div>
       <div class="field wide"><label for="f-notes">Notes</label><textarea id="f-notes" rows="2" placeholder="Fit, gaps, who you spoke to"></textarea></div>
       <div class="form-foot">
         <button class="btn" type="submit" id="f-submit">Add application</button>
@@ -207,7 +252,32 @@
   const WAITING = new Set(["Applied", "Screening"]);
   const FOLLOW_UP_DAYS = 7;
 
-  const state = { rows: [], loaded: false, db: null, assets: null, downloads: null, canWrite: null, error: "", pendingRender: false };
+  const state = { rows: [], loaded: false, db: null, assets: null, downloads: null, canWrite: null, error: "", pendingRender: false,
+    openPacks: new Set(), packText: new Map(), query: "", filter: "" };
+  const PREFS_KEY = "tracker-search-v1";
+  try {
+    const saved = JSON.parse(localStorage.getItem(PREFS_KEY) || "{}");
+    if (typeof saved.query === "string") state.query = saved.query;
+    if (typeof saved.filter === "string") state.filter = saved.filter;
+  } catch (_) {}
+  function savePrefs() { try { localStorage.setItem(PREFS_KEY, JSON.stringify({ query: state.query, filter: state.filter })); } catch (_) {} }
+
+  // A filter is a stage label (from the pipeline) or a single status; "" shows everything.
+  function filterStatuses() {
+    if (!state.filter) return null;
+    const stage = STAGES.find(([label]) => label === state.filter);
+    return stage ? stage[1] : [state.filter];
+  }
+  const SEARCH_FIELDS = ["company", "role", "location", "source", "contact", "notes", "cvName", "letterName", "packName", "postingUrl", "status", "id"];
+  function norm(s) { return String(s || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[_\-]+/g, " "); }
+  function matches(r) {
+    const statuses = filterStatuses();
+    if (statuses && !statuses.includes(r.status)) return false;
+    const words = norm(state.query).split(/\s+/).filter(Boolean);
+    if (!words.length) return true;
+    const hay = norm(SEARCH_FIELDS.map((k) => r[k]).join(" "));
+    return words.every((w) => hay.includes(w));
+  }
   const $ = (id) => document.getElementById(id);
 
   function h(tag, props, ...kids) {
@@ -240,6 +310,10 @@
     return [...state.rows].sort((a, b) => {
       const ra = a.status === "Ready to send" ? 0 : 1, rb = b.status === "Ready to send" ? 0 : 1;
       if (ra !== rb) return ra - rb;
+      if (ra === 0) {
+        const pa = a.priority || 9999, pb = b.priority || 9999;
+        if (pa !== pb) return pa - pb;
+      }
       return (b.appliedOn || "").localeCompare(a.appliedOn || "") || (a.company || "").localeCompare(b.company || "");
     });
   }
@@ -283,13 +357,78 @@
     const p = $("pipeline");
     p.replaceChildren(...STAGES.map(([label, statuses, tone]) => {
       const n = state.rows.filter((r) => statuses.includes(r.status)).length;
-      return h("div", { class: "stage" + (n ? " has" : ""), "data-tone": tone },
-        h("span", { class: "n", text: String(n) }), h("span", { class: "l", text: label }));
+      const on = state.filter === label;
+      return h("button", {
+        class: "stage" + (n ? " has" : ""), type: "button", "data-tone": tone, "aria-pressed": on ? "true" : "false",
+        "aria-label": (on ? "Show all applications" : "Show only " + label) + " (" + n + ")",
+        onclick: () => { state.filter = on ? "" : label; $("filter-status").value = state.filter; savePrefs(); render(); },
+      }, h("span", { class: "n", text: String(n) }), h("span", { class: "l", text: label }));
     }));
   }
 
-  function fileLink(assetId, label) {
-    return assetId ? h("a", { class: "file", href: "/_blob/" + assetId, target: "_blank", rel: "noopener", text: label }) : null;
+  // Files are fetched inside the page and handed to the viewer through `downloads`:
+  // a plain link opens outside the artifact view, where the file doesn't load.
+  async function fetchAsset(assetId) {
+    const res = await fetch("/_blob/" + assetId);
+    if (!res.ok) throw { code: "missing" };
+    return res.blob();
+  }
+  function fileFailed(e) {
+    const code = e && e.code;
+    if (code === "declined") return;
+    if (code === "rate_limited") toast("A download is already waiting for your answer.");
+    else if (code === "missing") toast("That file couldn't be found.");
+    else if (code === "bad_request" || code === "rejected_extension") toast("That file can't be saved from here.");
+    else if (code) toast("Downloads aren't available here.");
+    else toast("That file didn't load. Check your connection and try again.");
+  }
+  function fileLink(assetId, label, filename) {
+    if (!assetId) return null;
+    if (!state.downloads) return h("a", { class: "file", href: "/_blob/" + assetId, target: "_blank", rel: "noopener", text: label });
+    return h("button", {
+      class: "file", type: "button", text: label,
+      onclick: async (ev) => {
+        const btn = ev.currentTarget; btn.disabled = true;
+        try { await state.downloads.save({ filename: filename || label + ".pdf", data: await fetchAsset(assetId) }); }
+        catch (e) { fileFailed(e); }
+        finally { btn.disabled = false; }
+      },
+    });
+  }
+
+  // The application pack (Markdown) opens as text inside the row, so it can be read and copied on a phone.
+  function packToggle(r) {
+    if (!r.packAsset) return null;
+    const open = state.openPacks.has(r.id);
+    return h("button", {
+      class: "file", type: "button", "aria-expanded": open ? "true" : "false",
+      text: open ? "Hide how to apply" : "How to apply & answers",
+      onclick: async () => {
+        if (state.openPacks.has(r.id)) { state.openPacks.delete(r.id); render(); return; }
+        state.openPacks.add(r.id); render();
+        if (state.packText.has(r.packAsset)) return;
+        try { state.packText.set(r.packAsset, await (await fetchAsset(r.packAsset)).text()); }
+        catch (e) { state.packText.set(r.packAsset, null); }
+        render();
+      },
+    });
+  }
+  function packPanel(r) {
+    if (!r.packAsset || !state.openPacks.has(r.id)) return null;
+    const text = state.packText.get(r.packAsset);
+    const body = text === undefined ? h("p", { class: "hint", text: "Loading…" })
+      : text === null ? h("p", { class: "hint", text: "This file didn't load. Check your connection and try again." })
+      : h("pre", { class: "pack-text", text });
+    const save = state.downloads && text ? h("button", {
+      class: "btn ghost small", type: "button", text: "Save as file",
+      onclick: async (ev) => {
+        const btn = ev.currentTarget; btn.disabled = true;
+        try { await state.downloads.save({ filename: r.packName || (slug(r.company || "application") + ".md"), data: text }); }
+        catch (e) { fileFailed(e); }
+        finally { btn.disabled = false; }
+      },
+    }) : null;
+    return h("div", { class: "pack" }, body, save ? h("div", { class: "row-tools" }, save) : null);
   }
 
   function copyButton(text) {
@@ -312,7 +451,7 @@
     const tone = TONE[r.status] || "idle";
 
     const who = h("div", { class: "who" },
-      h("h2", { text: r.company || "Untitled" }),
+      h("h2", { text: (r.status === "Ready to send" && r.priority ? "#" + r.priority + " " : "") + (r.company || "Untitled") }),
       h("p", { class: "role", text: [r.role, r.location].filter(Boolean).join(" · ") }),
       r.source ? h("p", { class: "role", text: (r.status === "Ready to send" ? "Apply by " : "Applied through ") + r.source }) : null,
       r.contact ? h("div", { class: "contact" }, h("span", { text: r.contact }), copyButton(r.contact)) : null);
@@ -345,8 +484,9 @@
 
     const files = h("div", { class: "files" },
       r.postingUrl ? h("a", { class: "file", href: r.postingUrl, target: "_blank", rel: "noopener", text: "Posting ↗" }) : null,
-      fileLink(r.cvAsset, r.status === "Ready to send" ? "CV to send (PDF)" : "CV sent (PDF)"),
-      fileLink(r.packAsset, "Cover letter & answers"));
+      fileLink(r.cvAsset, r.status === "Ready to send" ? "CV to send (PDF)" : "CV sent (PDF)", r.cvName),
+      fileLink(r.letterAsset, r.status === "Ready to send" ? "Cover letter to send (PDF)" : "Cover letter sent (PDF)", r.letterName),
+      packToggle(r));
 
     const side = h("div", { class: "side" }, statusEl, files);
 
@@ -370,7 +510,7 @@
       notes.append(tools);
     } else if (r.notes) notes.append(h("p", { text: r.notes }));
 
-    return h("article", { class: "app", "data-tone": r.status === "Ready to send" ? "warn" : null }, who, dates, side, notes);
+    return h("article", { class: "app", "data-tone": r.status === "Ready to send" ? "warn" : null }, who, dates, side, packPanel(r), notes);
   }
 
   function render() {
@@ -384,8 +524,11 @@
     $("banner").textContent = state.error;
     renderPipeline();
     $("export-csv").hidden = !(state.downloads && state.rows.length);
+    $("toolbar").hidden = !(state.loaded && state.rows.length && !state.error);
+    $("q-clear").hidden = !state.query;
     $("add-panel").hidden = !(state.db && state.canWrite !== false && !state.error);
     $("cv-field").hidden = !state.assets;
+    $("letter-field").hidden = !state.assets;
 
     if (state.error) { list.replaceChildren(); return; }
     if (!state.loaded) {
@@ -397,7 +540,21 @@
         "Send Claude a job posting and it will add the row with the tailored CV, or add one yourself with the form below."));
       return;
     }
-    list.replaceChildren(...sorted().map(renderRow));
+    const shown = sorted().filter(matches);
+    const filtered = state.query.trim() || state.filter;
+    const showing = $("showing");
+    if (filtered) {
+      showing.replaceChildren("Showing " + shown.length + " of " + state.rows.length + " ",
+        h("button", { type: "button", text: "Show all", onclick: () => {
+          state.query = ""; state.filter = ""; $("q").value = ""; $("filter-status").value = ""; savePrefs(); render();
+        } }));
+    } else showing.textContent = state.rows.length + " applications";
+    if (!shown.length) {
+      list.replaceChildren(h("div", { class: "empty" }, h("strong", { text: "No matches" }),
+        "Nothing matches “" + (state.query.trim() || state.filter) + "”. Try a company name such as PwC, or a CV name such as Henkel."));
+      return;
+    }
+    list.replaceChildren(...shown.map(renderRow));
   }
 
   document.addEventListener("focusout", () => setTimeout(() => { if (state.pendingRender) render(); }, 0));
@@ -405,7 +562,7 @@
   function csv() {
     const cols = [["company", "Company"], ["role", "Role"], ["location", "Location"], ["source", "Applied through"], ["status", "Status"],
       ["postedOn", "Posted on"], ["appliedOn", "Applied on"], ["followUpOn", "Follow up"], ["postingUrl", "Posting"],
-      ["contact", "Contact"], ["cvName", "CV sent"], ["notes", "Notes"]];
+      ["contact", "Contact"], ["cvName", "CV sent"], ["letterName", "Cover letter sent"], ["notes", "Notes"]];
     const esc = (v) => { v = v == null ? "" : String(v); return /[",\r\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
     return "﻿" + [cols.map((c) => c[1]).join(","), ...sorted().map((r) => cols.map((c) => esc(r[c[0]])).join(","))].join("\r\n");
   }
@@ -417,6 +574,17 @@
       else if (e && e.code !== "declined") { toast("Downloads aren't available here."); state.downloads = null; render(); }
     } finally { btn.disabled = false; }
   });
+
+  $("filter-status").replaceChildren(
+    h("option", { value: "", text: "All statuses" }),
+    ...STATUSES.map((s) => h("option", { value: s, text: s })),
+    h("option", { value: "Closed", text: "Closed (rejected, no response, withdrawn)" }));
+  $("filter-status").value = state.filter;
+  $("filter-status").addEventListener("change", (ev) => { state.filter = ev.target.value; savePrefs(); render(); });
+  $("q").value = state.query;
+  $("q").addEventListener("input", (ev) => { state.query = ev.target.value; savePrefs(); render(); });
+  $("q").addEventListener("keydown", (ev) => { if (ev.key === "Escape") { state.query = ""; ev.target.value = ""; savePrefs(); render(); } });
+  $("q-clear").addEventListener("click", () => { state.query = ""; $("q").value = ""; savePrefs(); render(); $("q").focus(); });
 
   $("f-status").replaceChildren(...STATUSES.map((s) => h("option", { value: s, text: s, selected: s === "Applied" })));
   $("f-applied").value = today();
@@ -433,16 +601,18 @@
         postingUrl: v("f-url") || null, contact: v("f-contact") || null, status,
         postedOn: v("f-posted") || null, appliedOn,
         followUpOn: WAITING.has(status) && appliedOn ? addDays(appliedOn, FOLLOW_UP_DAYS) : null,
-        cvAsset: null, cvName: null, packAsset: null, packName: null, notes: v("f-notes") || "",
+        cvAsset: null, cvName: null, letterAsset: null, letterName: null, packAsset: null, packName: null, notes: v("f-notes") || "",
         createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
       };
-      const file = $("f-cv").files && $("f-cv").files[0];
-      if (file && state.assets) {
+      const uploads = [["f-cv", "cvAsset", "cvName", "CV"], ["f-letter", "letterAsset", "letterName", "cover letter"]];
+      for (const [input, assetKey, nameKey, what] of uploads) {
+        const file = $(input).files && $(input).files[0];
+        if (!file || !state.assets) continue;
         try {
           const up = await state.assets.upload(file, { type: "application/pdf" });
-          row.cvAsset = up.id; row.cvName = file.name;
+          row[assetKey] = up.id; row[nameKey] = file.name;
         } catch (e) {
-          toast(e && e.code === "too_large" ? "That PDF is over 20 MB." : e && e.code === "unsupported_type" ? "Attach the CV as a PDF." : "The CV didn't upload. Try again.");
+          toast(e && e.code === "too_large" ? "That PDF is over 20 MB." : e && e.code === "unsupported_type" ? "Attach the " + what + " as a PDF." : "The " + what + " didn't upload. Try again.");
           return;
         }
       }

@@ -10,6 +10,10 @@ from pathlib import Path
 # CV_MODULE selects a per-job variant (e.g. variants.arabic_ai); default is the base CV.
 C = importlib.import_module(os.environ.get("CV_MODULE", "cv_content"))
 STEM = getattr(C, "FILE_STEM", "Ahmed_Dorra_CV")
+if os.environ.get("CV_NO_ARABIC_INTENT") != "1":
+    import arabic_intent_project
+
+    arabic_intent_project.apply(C)
 
 OUT = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
 OUT.mkdir(parents=True, exist_ok=True)
@@ -66,7 +70,7 @@ def build_html() -> str:
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>{e(C.NAME)} — CV</title>
 <style>
-  @page {{ size: A4; margin: 13mm 14mm; }}
+  @page {{ size: A4; margin: 11.5mm 14mm; }}
   * {{ box-sizing: border-box; }}
   body {{ font-family: Calibri, Carlito, Arial, sans-serif; font-size: 10.4pt; line-height: 1.32;
          color: #111; margin: 0; }}

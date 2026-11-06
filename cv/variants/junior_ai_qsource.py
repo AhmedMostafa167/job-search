@@ -47,7 +47,8 @@ _shop["bullets"] = [
     "experiment and its result in an improvement log.",
 ]
 _visioneer["bullets"] = [
-    "Fine-tuned Stable Diffusion v1.5 with LoRA (PyTorch, Hugging Face Diffusers) on ~12k captioned floor plans to "
+    "With a colleague, fine-tuned Stable Diffusion v1.5 with LoRA (PyTorch, Hugging Face Diffusers) on ~12k "
+    "captioned floor plans to "
     "generate furnished 2D layouts from text prompts; a teammate trained the companion schematic model, and both "
     "were served to an Android AR app. Published in Machine Graphics & Vision (2025).",
 ]
