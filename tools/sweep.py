@@ -124,15 +124,22 @@ BAD_PLACE = re.compile(CFG["bad_places"], re.I)
 BAD_COMPANY = re.compile(CFG["bad_companies"], re.I)
 HOT = re.compile(CFG["hot_words"], re.I)
 BAD_URL = re.compile(CFG["bad_urls"], re.I)
+BAD_ROLE = re.compile(CFG["bad_role"], re.I)
+NON_EN = re.compile(CFG["non_english_title"], re.I)
+US_STATE = re.compile(r",\s*(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)\b(?!\w)")
 GENERIC = re.compile(CFG["generic_title"], re.I)
 AI = re.compile(CFG["ai_title"], re.I)
 
 
 def keep(j, cutoff):
     t, loc = j["title"], j["location"]
-    if not t or not WANT.search(t):
+    if not t:
         return False
-    if BAD.search(t) and not JUNIOR_OK.search(t):
+    if not AI.search(t) and not (GENERIC.search(t) and JUNIOR_OK.search(t)):
+        return False  # AI/ML/data-science titles at any non-senior level; generic ones only when junior or graduate
+    if BAD.search(t) or BAD_ROLE.search(t) or NON_EN.search(t):
+        return False
+    if US_STATE.search(loc) or "united states" in loc.lower():
         return False
     if j["date"] and j["date"] < cutoff:
         return False
@@ -140,8 +147,6 @@ def keep(j, cutoff):
         return False
     if BAD_PLACE.search(loc):
         return False
-    if GENERIC.search(t) and not AI.search(t) and not JUNIOR_OK.search(t):
-        return False  # generic software/data titles only when junior or graduate level
     return True
 
 
