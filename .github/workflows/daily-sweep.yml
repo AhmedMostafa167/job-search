@@ -1,0 +1,36 @@
+name: Daily job sweep
+
+on:
+  schedule:
+    - cron: "0 5 * * *"   # 05:00 UTC, 07:00 in Cairo
+  workflow_dispatch:       # "Run workflow" button on the Actions tab
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the sweep
+        run: python3 tools/sweep.py
+      - name: Commit the report and the seen list
+        run: |
+          git config user.name "job-sweep"
+          git config user.email "job-sweep@users.noreply.github.com"
+          git add shortlists/auto tools/seen.json
+          git diff --cached --quiet || git commit -m "Job sweep $(date -u +%F)"
+          git push
+      - name: Open an issue with the new jobs (GitHub emails you)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          f="shortlists/auto/$(date -u +%F).md"
+          if grep -q "Nothing new" "$f"; then echo "Nothing new, no issue."; exit 0; fi
+          gh issue create --title "New jobs $(date -u +%F)" --body-file "$f"
