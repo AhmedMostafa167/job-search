@@ -210,7 +210,7 @@ def main():
     new = [j for j in kept if key(j["url"]) not in seen]
     today = dt.date.today().isoformat()
     EG = re.compile(r"egypt|cairo|giza|alexandria|mansoura|smart village|new cairo|6th of october", re.I)
-    GULF = re.compile(r"saudi|riyadh|jeddah|dammam|dubai|abu dhabi|uae|emirates|sharjah|ajman|qatar|doha|kuwait|bahrain|manama|oman|muscat|jordan|amman|morocco|casablanca|tunisia|lebanon|beirut|iraq|mena|gcc", re.I)
+    GULF = re.compile(r"saudi|riyadh|jeddah|dammam|dubai|abu dhabi|\buae\b|emirates|sharjah|ajman|qatar|doha|kuwait|bahrain|manama|\boman\b|muscat|jordan|amman|morocco|casablanca|tunisia|lebanon|beirut|iraq|\bmena\b|\bgcc\b", re.I)
     REMOTE = re.compile(r"remote|worldwide|anywhere|global|emea|africa|europe", re.I)
     def tier(j):
         loc = j["location"]
