@@ -6,7 +6,8 @@ Asks (AI Engineer level): 1-3 yrs; GenAI integration pipelines, API wrappers, in
 versioning, CI/CD, automated testing, monitoring, drift detection); APIs exposing model outputs; unit and integration
 tests; production monitoring; reusable components; documentation and runbooks; secure coding; Python with
 PyTorch/scikit-learn; Docker/Kubernetes; RAG; prompt engineering; data pipelines.
-Lead with the Shopping Assistant as a production-style LLM service. No Kubernetes, drift detection or banking claimed.
+Updated 2026-11-09: the Arabic Banking Intent Classifier (banking intents, MLflow promotion gate, drift alert) leads,
+with its full entry; the Shopping Assistant follows as the production-style LLM service. No Kubernetes or bank job claimed.
 """
 import copy
 
@@ -19,14 +20,17 @@ FILE_STEM = "Ahmed_Dorra_CV_CIB"
 TITLE = "AI Engineer — GenAI Engineering & LLMOps (RAG · APIs · CI/CD · Monitoring)"
 
 SUMMARY = (
-    "AI engineer who builds GenAI features as production-style services in Python: RAG pipelines and LangGraph "
-    "agents behind FastAPI APIs, packaged with Docker, tested (104 automated tests) and shipped through GitHub "
-    "Actions CI, with Langfuse tracing and prompt versioning, MLflow and DVC for experiments and data, and "
-    "Prometheus/Grafana monitoring. On a 12,730-product assistant, measured every change before keeping it: hybrid "
-    "retrieval reached 72% top-10 recall vs 41% for vector search alone, and an HNSW index cut median search latency "
-    "from 35 ms to 3.1 ms. Based in Giza; Computer Science teaching assistant used to documenting and explaining "
-    "systems."
+    "AI engineer who builds AI features as production-style services in Python. Fine-tuned AraBERT to classify "
+    "77 Arabic banking intents (macro-F1 0.919, tested on unseen Saudi, Moroccan and Tunisian dialects) and served "
+    "it as ONNX behind a monitored FastAPI service with a drift alert and an MLflow promotion gate. Builds RAG "
+    "pipelines and LangGraph agents behind APIs, packaged with Docker, tested (104 automated tests) and shipped "
+    "through GitHub Actions CI, with Langfuse tracing, MLflow and DVC, and Prometheus/Grafana monitoring; measures "
+    "every change (hybrid retrieval 72% top-10 recall vs 41% for vector search). Native Arabic speaker based in Giza; "
+    "Computer Science teaching assistant used to documenting and explaining systems."
 )
+
+ARABIC_INTENT_FULL = True
+ARABIC_INTENT_POSITION = 0
 
 SKILLS = [
     ("LLMOps & Engineering", "Docker, Docker Compose, GitHub Actions (CI), pytest (unit and integration tests), "

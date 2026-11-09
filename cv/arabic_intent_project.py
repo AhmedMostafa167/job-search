@@ -2,6 +2,7 @@
 
 Numbers come from that repo's README (checked 4 Nov 2026). The README's laptop remark is left out on purpose.
 Full entry for ML/MLOps/Arabic/data roles; short entry for LLM-agent roles, where the agent projects keep the lead.
+A variant can override this with ARABIC_INTENT_FULL (bool) and ARABIC_INTENT_POSITION (0 = first project).
 VISIONEER is dropped from the Projects section (the paper stays under Publications).
 """
 import copy
@@ -40,9 +41,12 @@ SKILL_ADD = "Arabic NLP (AraBERT), ONNX Runtime, MLflow model registry"
 
 def apply(module):
     projects = [p for p in module.PROJECTS if p["name"] != "VISIONEER"]
-    full = bool(FOCUS_FULL.search(getattr(module, "TITLE", "")))
+    full = getattr(module, "ARABIC_INTENT_FULL", None)
+    if full is None:
+        full = bool(FOCUS_FULL.search(getattr(module, "TITLE", "")))
     entry = copy.deepcopy(FULL if full else SHORT)
-    projects.insert(min(1 if full else 2, len(projects)), entry)
+    default_pos = 1 if full else 2
+    projects.insert(min(getattr(module, "ARABIC_INTENT_POSITION", default_pos), len(projects)), entry)
     module.PROJECTS = projects
     skills = list(module.SKILLS)
     for i, (k, v) in enumerate(skills):
