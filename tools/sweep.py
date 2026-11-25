@@ -128,14 +128,19 @@ NON_EN = re.compile(CFG["non_english_title"], re.I)
 US_STATE = re.compile(r",\s*(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)\b(?!\w)")
 GENERIC = re.compile(CFG["generic_title"], re.I)
 AI = re.compile(CFG.get("core_title") or CFG["ai_title"], re.I)  # the job-title words that define the field
+WRONG_STACK = re.compile(CFG.get("wrong_stack") or "^$", re.I)  # generic titles in stacks Ahmed doesn't use
 
 
 def keep(j, cutoff):
     t, loc = j["title"], j["location"]
     if not t:
         return False
-    if not AI.search(t) and not (GENERIC.search(t) and (JUNIOR_OK.search(t) or not CFG.get("require_junior_for_generic", True))):
-        return False
+    if not AI.search(t):
+        # A non-AI title must be a generic engineering title, junior (when required), and not in a stack he doesn't use.
+        if not GENERIC.search(t) or WRONG_STACK.search(t):
+            return False
+        if CFG.get("require_junior_for_generic", True) and not JUNIOR_OK.search(t):
+            return False
     if BAD.search(t) or BAD_ROLE.search(t) or NON_EN.search(t):
         return False
     if j["date"] and j["date"] < cutoff:
@@ -160,9 +165,9 @@ def flags(j):
 
 def score(j):
     s = 0
-    s -= 2 if re.search(r"senior|sr\.?|snr|principal|staff|head|director|architect|manager", j["title"], re.I) else 0
+    s -= 5 if re.search(r"senior|\bsr\b|snr|principal|staff|head|director|architect|manager|\blead\b", j["title"], re.I) else 0
     s += 3 if re.search(r"junior|jr\b|graduate|entry|fresh|associate|trainee|early", j["title"], re.I) else 0
-    s += 2 if re.search(r"egypt|cairo|giza|alexandria", j["location"], re.I) else 0
+    s += 2 if re.search(r"egypt|cairo|giza|alexandria|,\s*EG\b", j["location"], re.I) else 0
     s += 2 if re.search(r"saudi|riyadh|jeddah|dubai|abu dhabi|uae|emirates|qatar|doha|kuwait|bahrain|oman|jordan|amman", j["location"], re.I) else 0
     s += 1 if re.search(r"remote|worldwide|anywhere|emea|africa", j["location"], re.I) else 0
     s += 1 if re.search(r"relocat|visa|sponsor", j["extra"] + j["title"], re.I) else 0
@@ -209,7 +214,7 @@ def main():
         kept.append(j)
     new = [j for j in kept if key(j["url"]) not in seen]
     today = dt.date.today().isoformat()
-    EG = re.compile(r"egypt|cairo|giza|alexandria|mansoura|smart village|new cairo|6th of october", re.I)
+    EG = re.compile(r"egypt|cairo|giza|alexandria|mansoura|smart village|new cairo|6th of october|,\s*EG\b|^EG$", re.I)
     GULF = re.compile(r"saudi|riyadh|jeddah|dammam|dubai|abu dhabi|\buae\b|emirates|sharjah|ajman|qatar|doha|kuwait|bahrain|manama|\boman\b|muscat|jordan|amman|morocco|casablanca|tunisia|lebanon|beirut|iraq|\bmena\b|\bgcc\b", re.I)
     REMOTE = re.compile(r"remote|worldwide|anywhere|global|emea|africa|europe", re.I)
     def tier(j):
@@ -230,7 +235,7 @@ def main():
         per_tier[t].append(j)
         shown.append(j)
     lines = [f"# Job sweep {today}", "",
-             f"Read {len(allj)} posts ({len(uniq)} unique), {len(kept)} passed the filters, **{len(new)} new**; showing {len(shown)} (at most {CFG.get('max_per_company', 3)} per company).", ""]
+             f"Read {len(allj)} posts ({len(uniq)} unique), {len(kept)} passed the filters, **{len(new)} new** since the last run; showing the best {len(shown)} (at most {CFG.get('max_per_company', 3)} per company).", ""]
     names = ["Egypt", "Gulf and Arab world", "Remote or worldwide", "Everywhere else (relocation)"]
     if shown:
         for t in range(4):
@@ -247,7 +252,9 @@ def main():
     (outdir / f"{today}.md").write_text("\n".join(lines))
     print("\n".join(lines[:6]))
     if not a.no_state:
-        seen |= {key(j["url"]) for j in shown}  # only what was shown; the rest stays for tomorrow
+        # Mark every new post as seen, shown or not: the unshown ones are the lowest-scoring repeats from the same
+        # companies or beyond the caps. Marking only the shown ones made the same ~3,500 posts count as "new" daily.
+        seen |= {key(j["url"]) for j in new}
         seen_path.write_text(json.dumps(sorted(seen)))
     return 0
 
