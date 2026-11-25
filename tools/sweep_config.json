@@ -129,12 +129,13 @@
   "bad_role": "\\b(physician|nurse|drivers?|wordpress|accountant|designer|content reviewer|annotation|video creator|financial|finance|supply chain|cash flow|copywriter|procurement|butler|service desk|call cent(er|re)|customer (service|success|support)|recruit\\w*|legal|marketing|sales|hr|human resources|knowledge analyst|research analyst|business analyst|growth|operator|front desk|receptionist|hotel|teacher|lecturer)\\b",
   "non_english_title": "[Ѐ-ӿ֐-ۿ฀-๿぀-ヿ㐀-鿿가-힯]|\\b(développeur|ingénieur|ingenieur|ingeniør|ingenjör|entwickler|sviluppatore|desarrollador|programista|inżynier|stage|stagiaire|alternance|\\(h/f\\)|\\(m/w/d\\)|\\(w/m/d\\)|\\(m/f/d\\)|\\(f/h\\))",
   "core_title": "\\b(ai|a\\.i\\.|ml|llm|genai|nlp|machine learning|data scien\\w*|generative|agentic|ai agents?|llm agents?|mlops|llmops|deep learning|prompt|applied scientist|research (engineer|scientist)|computer vision)\\b",
-  "require_junior_for_generic": false,
+  "require_junior_for_generic": true,
   "tier_caps": [
     100,
-    60,
-    60,
+    70,
+    50,
     60
   ],
-  "max_per_company": 3
+  "max_per_company": 3,
+  "wrong_stack": "\\b(java|\\.net|c#|php|laravel|ruby|rails|golang|go developer|rust|scala|kotlin|swift|ios|android|flutter|react|angular|vue|node\\.?js|javascript|typescript|salesforce|sap|abap|servicenow|oracle|dynamics|power ?bi|tableau|unity|unreal|embedded|firmware|fpga|verilog|c\\+\\+|mainframe|cobol|sharepoint|wordpress|shopify|magento|qa|tester|test automation|manual test)\\b"
 }
