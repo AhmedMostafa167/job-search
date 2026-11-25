@@ -397,8 +397,9 @@
   }
 
   // The application pack (Markdown) opens as text inside the row, so it can be read and copied on a phone.
+  // A row's own `howTo` text (just this job) wins over a shared pack file.
   function packToggle(r) {
-    if (!r.packAsset) return null;
+    if (!r.packAsset && !r.howTo) return null;
     const open = state.openPacks.has(r.id);
     return h("button", {
       class: "file", type: "button", "aria-expanded": open ? "true" : "false",
@@ -406,7 +407,7 @@
       onclick: async () => {
         if (state.openPacks.has(r.id)) { state.openPacks.delete(r.id); render(); return; }
         state.openPacks.add(r.id); render();
-        if (state.packText.has(r.packAsset)) return;
+        if (r.howTo || state.packText.has(r.packAsset)) return;
         try { state.packText.set(r.packAsset, await (await fetchAsset(r.packAsset)).text()); }
         catch (e) { state.packText.set(r.packAsset, null); }
         render();
@@ -414,8 +415,8 @@
     });
   }
   function packPanel(r) {
-    if (!r.packAsset || !state.openPacks.has(r.id)) return null;
-    const text = state.packText.get(r.packAsset);
+    if ((!r.packAsset && !r.howTo) || !state.openPacks.has(r.id)) return null;
+    const text = r.howTo || state.packText.get(r.packAsset);
     const body = text === undefined ? h("p", { class: "hint", text: "Loading…" })
       : text === null ? h("p", { class: "hint", text: "This file didn't load. Check your connection and try again." })
       : h("pre", { class: "pack-text", text });

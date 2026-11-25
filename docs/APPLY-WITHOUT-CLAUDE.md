@@ -5,9 +5,9 @@
    - No email? Open the repo → **Actions** → **Daily job sweep** → **Run workflow**, then open the newest file in `shortlists/auto/`.
 2. Twice a week, also check by hand what the sweep can't read: **Wuzzuf, Bayt, GulfTalent** and the company portals in `referrals/egypt-targets.md` (CIB, PwC ETIC, Valeo, Orange, Vodafone, Raya, Henkel, Capgemini). Set up job alerts on those sites with the same keywords.
 3. Open each promising post and decide in two minutes:
-   - **Skip** if it needs 3+ years, a US work permit, or a nationality you don't have, or if it asks for any fee or ID before an offer.
-   - **Apply** if most of the core skills match your CV.
-   - **Backup** if it's a stretch but possible.
+   - **Skip** only for real blockers: a nationality or residency you don't have, a language you don't speak, clearly senior (5+ years), core skills far outside your field, or any fee / ID documents before an offer.
+   - **Apply** if most of the core skills match your CV. Time zone, remote vs on-site, contract vs full-time and pay are never reasons to skip.
+   - **Backup** if it's a stretch (2–4 years, a senior title with a junior level) but possible.
 
 ## Pick the CV (all in `cv/` → build, or use the ready PDFs in `cv/ready/`)
 | The post is about… | Send |

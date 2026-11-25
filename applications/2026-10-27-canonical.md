@@ -4,7 +4,7 @@
   1. **Software Engineer – Edge AI**, home-based, EMEA (Egypt counts): https://job-boards.greenhouse.io/canonical/jobs/2614095. **Best fit.** It asks for your work with AI agents and LLM applications.
   2. **Python and Kubernetes Software Engineer – Data, Workflows, AI/ML & Analytics**, home-based worldwide: https://job-boards.greenhouse.io/canonical/jobs/5703396
   3. **Junior Ubuntu Software Engineer**, home-based worldwide: https://job-boards.greenhouse.io/canonical/jobs/6707669
-- **Skipped:** the Graduate Software Engineer role, which only accepts degrees completed in 2025 or 2026 (yours was 2024), and the MLOps Field Engineer role, which needs customer-facing professional experience.
+- **Skipped:** the Graduate Software Engineer role, which only accepts degrees completed in 2025 or 2026 (yours was 2024). The MLOps Field Engineer role now has its own tracker row.
 - **Apply:** on each Greenhouse link (no account needed). Upload `Ahmed_Dorra_CV_Canonical.pdf`.
 - **Important: the form says answers must be in your own words. AI-written text disqualifies you.** So this pack only lists points to cover; write every answer yourself.
 - **Verdict: apply to all three.** Canonical hires worldwide, home-based, and is one of the few big companies that really does hire from Egypt. They weigh academic record, personal projects and writing heavily.
