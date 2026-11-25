@@ -5,12 +5,12 @@ TITLE = "AI Engineer — LLM Systems (RAG · Agents · Evaluation)"
 CONTACT = [
     "Giza, Egypt · Open to relocation and remote",
     "+20 100 614 8440",
-    "newahmed1672022@gmail.com",
+    "ahmed.dorra.ml@gmail.com",
 ]
 LINKS = [
-    ("linkedin.com/in/ahmed-mostafa-dorra", "https://www.linkedin.com/in/ahmed-mostafa-dorra"),
-    ("github.com/AhmedMostafa167", "https://github.com/AhmedMostafa167"),
-    ("ahmedmostafa167.github.io", "https://ahmedmostafa167.github.io/"),
+    ("LinkedIn", "https://www.linkedin.com/in/ahmed-mostafa-dorra"),
+    ("GitHub", "https://github.com/AhmedMostafa167"),
+    ("Portfolio", "https://ahmedmostafa167.github.io/"),
 ]
 
 SUMMARY = (
@@ -88,12 +88,16 @@ PROJECTS = [
 EXPERIENCE = [
     {
         "role": "AI Research & Mentorship Engineer",
-        "org": "MLOps MENA Community",
+        "org": "MLOps MENA Community · Remote",
         "dates": "08/2026 – Present",
         "bullets": [
-            "Mentor community learners on their MLOps and AI projects: review their work and answer their technical "
-            "questions.",
-            "Research AI and MLOps topics and write technical material for the community.",
+            "Mentor community learners on end-to-end MLOps and AI engineering projects, reviewing repository "
+            "structure, evaluation, experiment tracking, containerisation and model serving, and giving feedback "
+            "they can act on.",
+            "Research applied LLM, RAG and GPU-utilisation topics and draft community learning roadmaps and "
+            "technical material that practitioners at different levels can follow.",
+            "Help build the MLOps MENA Academy platform with other community members (student profiles, project and "
+            "assignment submissions).",
         ],
     },
     {
@@ -167,13 +171,9 @@ EDUCATION = [
 
 TRAINING = [
     "ML Zoomcamp (2025) · LLM Zoomcamp (2026) · AI Agents Crash Course (2025) — DataTalks.Club",
-    "MLOps Practitioner Course — MLOps MENA Community (2026)",
-    "Mini-RAG: production RAG systems — Abu Bakr Soliman (2026)",
-    "Hugging Face LLM Course (in progress)",
-    "Generative AI with Large Language Models — DeepLearning.AI",
-    "Natural Language Processing, Deep Learning and Machine Learning Specializations — DeepLearning.AI (and Stanford)",
-    "Applied Text Mining in Python — University of Michigan",
-    "Vector Databases (Pinecone) — 365 Data Science",
+    "MLOps Practitioner — MLOps MENA (2026) · Mini-RAG — Abu Bakr Soliman (2026) · Hugging Face LLM Course (in progress)",
+    "DeepLearning.AI: Generative AI with LLMs; NLP, Deep Learning and Machine Learning Specializations (with Stanford)",
+    "Applied Text Mining in Python — University of Michigan · Vector Databases (Pinecone) — 365 Data Science",
 ]
 
 LANGUAGES = "Arabic (native) · English (professional working proficiency)"

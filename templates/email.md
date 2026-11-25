@@ -12,4 +12,4 @@ My CV is attached; code is at github.com/AhmedMostafa167 and my portfolio is ahm
 
 Best regards,
 Ahmed Dorra
-+20 100 614 8440 · newahmed1672022@gmail.com · linkedin.com/in/ahmed-mostafa-dorra
++20 100 614 8440 · ahmed.dorra.ml@gmail.com · linkedin.com/in/ahmed-mostafa-dorra

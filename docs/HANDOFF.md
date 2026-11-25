@@ -10,7 +10,7 @@ Read it fully before helping. Then read `CLAUDE.md` in the `AhmedMostafa167/job-
 - **Name on CVs:** Ahmed Dorra. GitHub, LinkedIn and Kaggle handles still say Ahmed Mostafa.
 - **Goal:** his first industry job as an AI / ML / LLM engineer (also data science, MLOps, Python backend, AI trainer and AI-instructor roles). **He needs a job, so when in doubt, apply.**
 - **How he works:** he sends job posts (pasted text, a link, or a screenshot), often from his phone. **Keep replies short and scannable.** Do the work with as little back-and-forth as possible.
-- **Contact:** Giza, Egypt · +20 100 614 8440 · newahmed1672022@gmail.com · linkedin.com/in/ahmed-mostafa-dorra · github.com/AhmedMostafa167 · ahmedmostafa167.github.io
+- **Contact:** Giza, Egypt · +20 100 614 8440 · ahmed.dorra.ml@gmail.com · linkedin.com/in/ahmed-mostafa-dorra · github.com/AhmedMostafa167 · ahmedmostafa167.github.io
 - **Citizenship:** Egyptian. Needs visa sponsorship outside Egypt; no US work authorisation to live in the US (US-remote contracts are fine). Open to relocation, remote, any time zone, any contract type.
 - **Languages:** Arabic (native), English (professional). Mention native Arabic for Arabic, MENA or Gulf companies.
 
