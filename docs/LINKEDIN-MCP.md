@@ -5,33 +5,32 @@ It runs on Ahmed's own computer, in the Claude desktop app, using his own Linked
 posts, list saved jobs, tell Easy Apply from external applications, and read Easy Apply forms. **It never submits an
 application.** Ahmed clicks Apply himself.
 
-## Setup (about 10 minutes, once)
+## Setup in the Claude desktop app (easiest: one-click bundle, no terminal)
 
-1. **Install uv**
-   - Windows: open PowerShell and run `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
-   - Mac: open Terminal and run `curl -LsSf https://astral.sh/uv/install.sh | sh`
-   - Close and reopen the terminal, then check: `uvx --version`
-2. **Install the Claude desktop app** from claude.ai/download and sign in.
-3. **Sign in to LinkedIn for the server.** In the terminal, run:
-   `uvx mcp-server-linkedin@4.31.0 --login`
-   A browser opens. Sign in to LinkedIn (approve on your phone if asked), then close it when the terminal says the session is saved.
-   (If you're already signed in to LinkedIn in Chrome/Edge, `uvx mcp-server-linkedin@4.31.0 --import-from-browser` also works.)
-4. **Add the server to the desktop app:** Settings → Developer → Edit Config, and put this in the file (keep any other servers already there):
+1. Install the **Claude desktop app** from claude.ai/download and sign in.
+2. Download the `.mcpb` file from the server's latest release:
+   https://github.com/stickerdaniel/linkedin-mcp-server/releases/latest (under "Assets").
+3. Double-click the downloaded `.mcpb` file. The desktop app opens and asks to install the LinkedIn extension: click **Install**.
+   The bundle is a fixed version, so it doesn't silently update itself.
+4. In a new chat, ask: "Check my LinkedIn session status." The first time, a LinkedIn sign-in opens (in the chat or a browser window).
+   Sign in and approve on your phone if LinkedIn asks. If you're already signed in to LinkedIn in Chrome/Edge, it may reuse that.
+   Early calls can say "setup in progress" while it downloads its browser: wait a minute and ask again.
+5. Settings → Extensions (or the 🔨 tools menu) → LinkedIn: set `send_message`, `connect_with_person`,
+   `reply_to_conversation`, `archive_conversation` and `get_inbox` to **Never allow / off**. Leave the job tools on, set to "Ask" if you want to approve each call.
+6. Paste the starter prompt below.
 
+Windows only: if it fails with "DLL load failed ... _greenlet", install the Microsoft Visual C++ Redistributable
+(https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist) and restart the app.
+
+### Alternative: config file + uv (if the bundle doesn't work)
+
+1. Install uv — Windows PowerShell: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`; Mac: `curl -LsSf https://astral.sh/uv/install.sh | sh`.
+2. Run `uvx mcp-server-linkedin@4.31.0 --login` and sign in.
+3. Settings → Developer → Edit Config:
    ```json
-   {
-     "mcpServers": {
-       "linkedin": {
-         "command": "uvx",
-         "args": ["mcp-server-linkedin@4.31.0"],
-         "env": { "UV_HTTP_TIMEOUT": "300" }
-       }
-     }
-   }
+   { "mcpServers": { "linkedin": { "command": "uvx", "args": ["mcp-server-linkedin@4.31.0"], "env": { "UV_HTTP_TIMEOUT": "300" } } } }
    ```
-   Windows: if the app can't find `uvx`, use the full path instead, e.g. `"command": "C:\\Users\\<you>\\.local\\bin\\uvx.exe"`.
-5. **Quit the app completely and reopen it.** You should see "linkedin" under the tools (🔨) icon.
-6. **First test:** paste the starter prompt below.
+4. Quit and reopen the app.
 
 ## Safety rules (to protect the LinkedIn account)
 
