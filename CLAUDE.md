@@ -33,7 +33,7 @@ A missed opening costs him more than a slow search. Be exhaustive and say what w
   - Workday: `/wday/cxs/<tenant>/<site>/job/<path>` returns `canApply`.
   - Greenhouse: `boards-api.greenhouse.io/v1/boards/<board>/jobs/<id>`.
   - Workable, Lever and Zoho pages show the post or an error.
-- **Search every source, every time.** Use the CLIs in `ai-job-search-dev/ai-job-search` (clone it):
+- **Search every source, every time.** Use the freehire and LinkedIn guest CLIs in `ai-job-search-dev/community-portals` (clone it; `portals/global/<name>/cli/src/cli.ts`, run with `bun run`, zero dependencies):
   - freehire: `--country EG` or `--region mena|global`, with no `--jobage`, paging until the results run out.
   - LinkedIn guest search: no `--jobage`, pages 1–5 per query.
   - The careers portals of the big Egyptian AI employers listed in `referrals/egypt-targets.md`: CIB (Taleo), PwC ETIC and Valeo (Workday), Orange (iCIMS), Vodafone, Raya (Oracle), Henkel (Cornerstone) and Capgemini.
