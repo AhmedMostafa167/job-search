@@ -5,6 +5,16 @@ Read it fully before helping. Then read `CLAUDE.md` in the `AhmedMostafa167/job-
 
 ---
 
+## Latest status (25 Nov 2026)
+
+- **CVs:** all 97 rebuilt with the HR-first summary (`cv/hr_summary.py`), email ahmed.dorra.ml@gmail.com, labelled LinkedIn/GitHub/Portfolio links and the expanded MLOps MENA role; all 2 pages. General CVs in Drive → Resume → "CVs 2026-11-25"; public CV link https://drive.google.com/file/d/1P_Tqwkuk-Yt_s2tsKK46PVKecZLfShMt/view?usp=sharing. Portfolio CV and contact email updated.
+- **Tracker:** ~306 rows. Newest Ready rows: `applications/2026-11-25-market-search.md` (18, priorities #10–27, Egypt first) and `applications/2026-11-25-sweep-picks.md` (16, #28–43). Every row's CV button points at the rebuilt CVs.
+- **Areeb AI Engineer (Cairo):** Ahmed was filling in its application form on 25 Nov; answers drafted in chat. Mark it Applied when he says "done".
+- **Daily sweep:** fixed on 25 Nov (remembers every reported post, junior-only generic titles, wrong stacks dropped, seniors ranked down). The 26 Nov email will be long once while it records the backlog; after that only new posts.
+- **LinkedIn:** Ahmed set up stickerdaniel/linkedin-mcp-server in his Claude desktop app (guide: `docs/LINKEDIN-MCP.md`, Drive doc "03 LinkedIn MCP"). Jobs only, ~2 sessions/day, never message or connect; it never submits, he does. Paste its results into the job-search chat to add rows.
+- **Still missing from Ahmed:** years of experience, expected salary, notice period (Easy Apply forms ask for them); military-service dates and internship partner names to confirm.
+- **Market search tools:** freehire and LinkedIn guest CLIs now live in `ai-job-search-dev/community-portals` (`portals/global/*/cli/src/cli.ts`, run with `bun run`), not in ai-job-search.
+
 ## 1. Who Ahmed is and what he needs
 
 - **Name on CVs:** Ahmed Dorra. GitHub, LinkedIn and Kaggle handles still say Ahmed Mostafa.
