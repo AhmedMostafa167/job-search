@@ -5,7 +5,8 @@ Adapt the company-specific lines before sending; never send a "Why us?" answer t
 
 ## Standard fields
 - **Years of experience:** [FILL IN, e.g. "Projects and research since 2023; teaching assistant since March 2026"]
-- **Expected salary / notice period:** [FILL IN]
+- **Expected salary:** [FILL IN]
+- **Notice period / start date:** Available to start immediately.
 - **Work authorisation:** Egyptian citizen; I need visa sponsorship outside Egypt. No US work authorisation.
 - **Relocation / remote:** open to both, any time zone.
 - **Links:** github.com/AhmedMostafa167 · ahmedmostafa167.github.io · linkedin.com/in/ahmed-mostafa-dorra
