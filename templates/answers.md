@@ -2,7 +2,7 @@
 
 - **Years of experience:** [FILL IN: e.g. "Projects and teaching since 2024; teaching assistant since March 2026"]
 - **Expected salary:** [FILL IN]
-- **Notice period:** [FILL IN]
+- **Notice period:** Available to start immediately.
 - **Work authorisation:** Egyptian citizen; I need visa sponsorship outside Egypt. No US work authorisation.
 - **Relocation:** open to relocation and to remote work.
 - **Languages:** Arabic (native), English (professional working proficiency).

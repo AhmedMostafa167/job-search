@@ -80,7 +80,7 @@ Experience questions (answer honestly; adjust to the exact wording)
 
 Money and timing
 - Expected salary: [FILL IN]
-- Notice period / start date: [FILL IN]
+- Notice period / start date: Available to start immediately.
 
 Short answers
 - "Why are you interested?": write 2 sentences specific to the company (the desktop app can draft from the post).

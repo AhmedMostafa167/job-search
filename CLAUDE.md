@@ -84,7 +84,7 @@ Only use claims verified against his repositories or confirmed by him.
 - Native Arabic speaker: mention it for Arabic, MENA or GCC-facing companies.
 - **CV summaries are written for HR first** (Ahmed's rule, Nov 2026): the first reader has no technical background, so the summary leads with how he works with people (teaching 700+ students, mentoring the MLOps MENA community: clear explanations, feedback, onboarding) and keeps the technical proof to one closing clause. `cv/hr_summary.py` builds every CV's summary at build time from the role in `TITLE`; pin exact wording for a variant in its `MODULE_OVERRIDES`. Technical detail belongs in Skills and Projects. Approved examples: Drive → Resume → "CVs 2026-11-24 (new summary, links, email)".
 - Contact email is ahmed.dorra.ml@gmail.com since Nov 2026 (the old newahmed1672022 address still receives mail but is no longer on CVs). The CV header shows LinkedIn · GitHub · Portfolio as labelled links.
-- Notice period, expected salary and years of experience haven't been given yet, so leave `[FILL IN]` placeholders.
+- **Availability: he can start immediately** (confirmed 27 Nov 2026); use "Available to start immediately" for notice-period / start-date questions. Expected salary and years of experience haven't been given yet, so leave `[FILL IN]` placeholders for those.
 
 ## Setup
 
