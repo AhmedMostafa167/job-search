@@ -7,6 +7,9 @@ Adapt the company-specific lines before sending; never send a "Why us?" answer t
 - **Years of experience:** [FILL IN, e.g. "Projects and research since 2023; teaching assistant since March 2026"]
 - **Expected salary:** [FILL IN]
 - **Notice period / start date:** Available to start immediately.
+- **Current CTC:** EGP 20,000/month (EGP 240,000/year, about AED 17,500 or USD 4,800/year; convert at the day's rate).
+- **Current job title:** Teaching Assistant, Computer Science (plus AI Research & Mentorship Engineer, MLOps MENA Community).
+- **Offers in hand:** No, I don't currently have any offers.
 - **Work authorisation:** Egyptian citizen; I need visa sponsorship outside Egypt. No US work authorisation.
 - **Relocation / remote:** open to both, any time zone.
 - **Links:** github.com/AhmedMostafa167 · ahmedmostafa167.github.io · linkedin.com/in/ahmed-mostafa-dorra
