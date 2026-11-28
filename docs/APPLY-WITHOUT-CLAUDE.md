@@ -43,3 +43,7 @@ Only claim what is in your repos or what you can explain in an interview. Detail
 
 ## Keep the CVs current
 Edit `cv/cv_content.py` (and `cv/arabic_intent_project.py` for the Arabic project) when something changes, rebuild, and upload the new general CV to Drive (Manage versions) and `assets/Ahmed_Dorra_CV.pdf` in the `AhmedMostafa167.github.io` repo.
+
+
+## Rule added 28 Nov 2026: work rights are not a reason to skip
+Apply even when a post asks for local right to work, residence or says no visa sponsorship (UK, EU, US, Canada...). The aim includes getting interviews to practise and learn the gaps. Still skip: nationality-only roles, security clearances that need citizenship, languages he doesn't speak, current-students-only or fixed graduation-year programmes, clear 5+ year senior roles.

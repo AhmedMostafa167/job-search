@@ -113,7 +113,8 @@
     "South Korea",
     "Canada",
     "Australia",
-    "New Zealand"
+    "New Zealand",
+    "United States"
   ],
   "want_title": "\\b(ai|a\\.i\\.|ml|llm|genai|nlp|machine learning|data scien\\w*|generative|agentic|agents?|mlops|llmops|deep learning|prompt|applied scientist|research (engineer|scientist)|computer vision|data analy\\w*|analytics engineer|bi developer|python|backend|back-end|data engineer|software (engineer|developer)|developer)\\b",
   "bad_title": "\\b(phd|professor|postdoc|werkstudent|working student|uae nationals|nationals only|emirati)\\b",
