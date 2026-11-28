@@ -1,6 +1,6 @@
 # 28 Nov 2026 batch: Ali Turky's lists
 
-14 new jobs added as Ready to send (priorities #1–#14). One section per job below.
+15 new jobs added as Ready to send (#1–#15; TP added as #9 after the repost check, so the rows after it moved down one). One section per job below.
 
 ## Already in the tracker or closed (not re-added)
 
@@ -17,7 +17,7 @@
 | Lamdax Fresh Graduate AI Engineer | Applied 4 Nov |
 | Smarterminds AI Engineer Intern | Applied 17 Oct |
 | Finalyze ML Intern (Arabic NLP) | Already Ready to send (#117) |
-| TP AI & Automation Analyst | Repost of a row you set to Withdrawn (1-3 yrs); say if you want it back |
+| TP AI & Automation Analyst | **New repost** (1-3 yrs; old 3-4 yr post closed): added as #9, see `2026-11-28-tp-ai-automation-analyst.md` |
 | Forasna Deep Learning & Full-Stack (6th of October) | Closed ("this job is closed", 3 months old) |
 
 ## Agentic AI Engineer (junior, 2 openings) — Forsa Property
@@ -795,3 +795,12 @@ Ahmed Dorra
 
 
 ---
+
+## Repost check (28 Nov)
+- **TP:** new post 4488896197 asks 1–3 years; the old one (3–4 years) is closed. Added.
+- **Arabic.AI:** the Built In copy (24 Nov) is the same AI Engineer job; you applied on 16 Oct and 8 Nov. Separate new role: End-to-End ML Engineer for Arabic/English dashboards (Riyadh, on-site; Qlik/Power BI/Dataiku core), not added.
+- **PwC ETIC:** Data Science Associate (657378WD) and AI Engineer Associate (752966WD) are the same requisitions you applied to; both still open.
+- **SDG, Orascom, Numrah, Smarterminds, Vertex, Finalyze:** same postings, no reposts.
+- **Lamdax:** same AI Engineer job; their new internship post is for current undergraduates only.
+- **Capgemini YPP:** no AI repost; the open YPP roles need German/Turkish/French/Spanish.
+- **Provectus:** a Serbia copy of the junior role (18 Nov) has gone from LinkedIn; their Lever board has no junior roles.
